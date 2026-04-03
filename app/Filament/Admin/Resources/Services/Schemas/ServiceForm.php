@@ -2,10 +2,11 @@
 
 namespace App\Filament\Admin\Resources\Services\Schemas;
 
+use App\Support\Filament\SimpleRepeaterList;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class ServiceForm
@@ -40,32 +41,8 @@ class ServiceForm
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing(function (?array $state) {
-                        $items = $state ?? [];
-                        $values = [];
-
-                        foreach ($items as $row) {
-                            $v = trim((string) ($row['value'] ?? ''));
-                            if ($v !== '') {
-                                $values[] = $v;
-                            }
-                        }
-
-                        return $values;
-                    })
-                    ->afterStateHydrated(function ($component, $state) {
-                        if (!is_array($state)) {
-                            $component->state([]);
-                            return;
-                        }
-
-                        $rows = [];
-                        foreach ($state as $v) {
-                            $rows[] = ['value' => $v];
-                        }
-
-                        $component->state($rows);
-                    }),
+                    ->dehydrateStateUsing([SimpleRepeaterList::class, 'dehydrate'])
+                    ->afterStateHydrated([SimpleRepeaterList::class, 'hydrate']),
 
                 TextInput::make('sort_order')
                     ->label('Ред')
@@ -98,7 +75,7 @@ class ServiceForm
             '64pxwhyus.png' => 'За нас (64pxwhyus.png)',
             '64pxcables.png' => 'Кабели (64pxcables.png)',
             '64pxzapitvane.png' => 'Запитване (64pxzapitvane.png)',
-    
+
             // NEW ICONS
             'icon1.png' => 'Икона 1 (icon1.png)',
             'icon2.png' => 'Икона 2 (icon2.png)',

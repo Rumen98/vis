@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Solutions\Schemas;
 
+use App\Models\Solution;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
@@ -14,7 +15,10 @@ class SolutionInfolist
             ->components([
                 TextEntry::make('title'),
                 TextEntry::make('solution_type')
-                    ->label('Тип решение'),
+                    ->label('Тип решение')
+                    ->formatStateUsing(
+                        fn (?string $state): string => Solution::typeOptions()[$state] ?? (string) $state
+                    ),
                 TextEntry::make('description')
                     ->placeholder('-')
                     ->columnSpanFull(),

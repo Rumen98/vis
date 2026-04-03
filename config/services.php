@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'leads' => [
+        'notification_email' => env('LEADS_NOTIFICATION_EMAIL', 'rumenk98@gmail.com'),
+    ],
+
 ];

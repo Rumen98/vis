@@ -8,7 +8,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -49,18 +48,12 @@ class LeadsTable
                 TextColumn::make('status')
                     ->label('Статус')
                     ->badge()
-                    ->formatStateUsing(fn (string $state) => match ($state) {
-                        LeadStatus::New->value => LeadStatus::New->label(),
-                        LeadStatus::InProgress->value => LeadStatus::InProgress->label(),
-                        LeadStatus::Done->value => LeadStatus::Done->label(),
-                        default => $state,
-                    })
-                    ->color(fn (string $state) => match ($state) {
-                        LeadStatus::New->value => 'warning',
-                        LeadStatus::InProgress->value => 'info',
-                        LeadStatus::Done->value => 'success',
-                        default => 'gray',
-                    }),
+                    ->formatStateUsing(
+                        fn (LeadStatus|string|null $state): string => LeadStatus::tryFromValue($state)?->label() ?? (string) $state
+                    )
+                    ->color(
+                        fn (LeadStatus|string|null $state): string => LeadStatus::tryFromValue($state)?->color() ?? 'gray'
+                    ),
 
                 TextColumn::make('created_at')
                     ->label('Създадено')
@@ -70,11 +63,7 @@ class LeadsTable
             ->filters([
                 SelectFilter::make('status')
                     ->label('Статус')
-                    ->options([
-                        LeadStatus::New->value => LeadStatus::New->label(),
-                        LeadStatus::InProgress->value => LeadStatus::InProgress->label(),
-                        LeadStatus::Done->value => LeadStatus::Done->label(),
-                    ]),
+                    ->options(LeadStatus::options()),
             ])
             ->recordActions([
                 ViewAction::make()->label('Преглед'),
@@ -83,10 +72,10 @@ class LeadsTable
                 Action::make('mark_in_progress')
                     ->label('В процес')
                     ->icon('heroicon-o-play')
-                    ->visible(fn ($record) => $record->status !== LeadStatus::InProgress->value)
+                    ->visible(fn ($record) => LeadStatus::tryFromValue($record->status) !== LeadStatus::InProgress)
                     ->action(function ($record) {
                         $record->update([
-                            'status' => LeadStatus::InProgress->value,
+                            'status' => LeadStatus::InProgress,
                             'contacted_at' => now(),
                         ]);
                     }),
@@ -94,10 +83,10 @@ class LeadsTable
                 Action::make('mark_done')
                     ->label('Обработено')
                     ->icon('heroicon-o-check')
-                    ->visible(fn ($record) => $record->status !== LeadStatus::Done->value)
+                    ->visible(fn ($record) => LeadStatus::tryFromValue($record->status) !== LeadStatus::Done)
                     ->action(function ($record) {
                         $record->update([
-                            'status' => LeadStatus::Done->value,
+                            'status' => LeadStatus::Done,
                             'contacted_at' => $record->contacted_at ?? now(),
                         ]);
                     }),

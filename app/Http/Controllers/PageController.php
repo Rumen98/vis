@@ -3,54 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\Service;
 use App\Models\Solution;
+use App\Support\BrandCatalog;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 
 class PageController extends Controller
 {
-    public function home()
+    public function home(): View
     {
         return view('pages.home');
     }
 
-    public function services()
+    public function solutions(): View
     {
-        $services = Service::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->latest('id')
-            ->get();
+        $businessSolutions = $this->solutionCollection(Solution::TYPE_BUSINESS);
+        $smbSolutions = $this->solutionCollection(Solution::TYPE_SMB);
 
-        return view('pages.services', compact('services'));
-    }
-
-   public function solutions()
-    {
-        $businessSolutions = Solution::query()
-            ->where('is_active', true)
-            ->where('solution_type', 'business')
-            ->with(['article' => function ($query) {
-                $query->where('is_active', true);
-            }])
-            ->orderBy('sort_order')
-            ->get();
-    
-        $smbSolutions = Solution::query()
-            ->where('is_active', true)
-            ->where('solution_type', 'smb')
-            ->with(['article' => function ($query) {
-                $query->where('is_active', true);
-            }])
-            ->orderBy('sort_order')
-            ->get();
-    
         $articles = Article::query()
-            ->where('is_active', true)
+            ->active()
             ->with('solution')
             ->orderByRaw('solution_id is null')
-            ->orderBy('sort_order')
+            ->ordered()
             ->get();
-    
+
         return view('pages.solutions', compact(
             'businessSolutions',
             'smbSolutions',
@@ -58,18 +35,61 @@ class PageController extends Controller
         ));
     }
 
-    public function why()
+    public function why(): View
     {
         return view('pages.why');
     }
 
-    public function contact()
+    public function contact(): View
     {
         return view('pages.contact');
     }
 
-    public function quote()
+    public function quote(): View
     {
         return view('pages.quote');
+    }
+
+    public function tech(BrandCatalog $brandCatalog): View
+    {
+        return view('pages.tech', [
+            'brands' => $brandCatalog->all(),
+        ]);
+    }
+
+    public function legacyBrandRedirect(string $brand, BrandCatalog $brandCatalog): RedirectResponse
+    {
+        $brandData = $brandCatalog->find($brand);
+
+        abort_if($brandData === null, 404);
+
+        return redirect()->route('brands.show', ['brand' => $brandData['slug']], 301);
+    }
+
+    public function brand(string $brand, BrandCatalog $brandCatalog): View
+    {
+        $brands = $brandCatalog->all();
+        $brandData = $brandCatalog->find($brand);
+
+        abort_if(! $brandData, 404);
+
+        $otherBrands = $brands
+            ->reject(fn (array $item) => strcasecmp($item['slug'], $brandData['slug']) === 0)
+            ->values();
+
+        return view('pages.brands.show', [
+            'brand' => $brandData,
+            'otherBrands' => $otherBrands,
+        ]);
+    }
+
+    private function solutionCollection(string $type): Collection
+    {
+        return Solution::query()
+            ->active()
+            ->forType($type)
+            ->withActiveArticle()
+            ->ordered()
+            ->get();
     }
 }

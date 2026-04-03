@@ -5,8 +5,8 @@ namespace App\Filament\Admin\Resources\Leads\Schemas;
 use App\Enums\LeadStatus;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class LeadForm
@@ -44,11 +44,7 @@ class LeadForm
                 // --- Новите полета за workflow ---
                 Select::make('status')
                     ->label('Статус')
-                    ->options([
-                        LeadStatus::New->value => LeadStatus::New->label(),
-                        LeadStatus::InProgress->value => LeadStatus::InProgress->label(),
-                        LeadStatus::Done->value => LeadStatus::Done->label(),
-                    ])
+                    ->options(LeadStatus::options())
                     ->required()
                     ->default(LeadStatus::New->value),
 

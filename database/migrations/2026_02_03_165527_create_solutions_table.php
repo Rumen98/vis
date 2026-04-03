@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('solutions', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->text('description')->nullable();
-        $table->string('icon')->nullable();
-        $table->json('bullets')->nullable();
-        $table->unsignedInteger('sort_order')->default(0);
-        $table->boolean('is_active')->default(true);
-        $table->timestamps();
-    });
+        Schema::create('solutions', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('icon')->nullable();
+            $table->json('bullets')->nullable();
+            $table->unsignedInteger('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
 
     }
 

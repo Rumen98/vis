@@ -8,10 +8,10 @@ class Icon
     {
         $file = config("icons.$key");
 
-        if (!$file) {
+        if (! $file) {
             return asset('icons/checkmark.png'); // fallback
         }
 
-        return asset('icons/' . $file);
+        return asset('icons/'.$file);
     }
 }

@@ -24,8 +24,11 @@ class ServiceResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationLabel = 'Услуги';
+
     protected static ?string $modelLabel = 'Услуга';
+
     protected static ?string $pluralModelLabel = 'Услуги';
+
     protected static \UnitEnum|string|null $navigationGroup = 'Съдържание';
 
     public static function form(Schema $schema): Schema

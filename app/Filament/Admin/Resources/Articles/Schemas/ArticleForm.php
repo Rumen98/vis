@@ -6,8 +6,8 @@ use App\Models\Solution;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
@@ -35,30 +35,22 @@ class ArticleForm
                     ->maxLength(255)
                     ->required(),
 
-              Select::make('solution_id')
-                ->label('Свързано решение')
-                ->searchable()
-                ->native(false)
-                ->default('__general__')
-                ->formatStateUsing(fn ($state) => $state ?? '__general__')
-                ->dehydrateStateUsing(fn ($state) => $state === '__general__' ? null : $state)
-                ->options(function (?object $record) {
-                    $currentSolutionId = $record?->solution_id;
-            
-                    return ['__general__' => 'Обща статия'] + Solution::query()
-                        ->where('is_active', true)
-                        ->where(function ($query) use ($currentSolutionId) {
-                            $query->whereDoesntHave('article');
-            
-                            if ($currentSolutionId) {
-                                $query->orWhere('id', $currentSolutionId);
-                            }
-                        })
-                        ->orderBy('title')
-                        ->pluck('title', 'id')
-                        ->all();
-                })
-                ->helperText('Едно решение може да има само една свързана статия. Избери „Обща статия“, ако не искаш връзка към решение.'),
+                Select::make('solution_id')
+                    ->label('Свързано решение')
+                    ->searchable()
+                    ->native(false)
+                    ->default('__general__')
+                    ->formatStateUsing(fn ($state) => $state ?? '__general__')
+                    ->dehydrateStateUsing(fn ($state) => $state === '__general__' ? null : $state)
+                    ->options(function (?object $record) {
+                        return ['__general__' => 'Обща статия'] + Solution::query()
+                            ->active()
+                            ->availableForArticle($record?->solution_id)
+                            ->orderBy('title')
+                            ->pluck('title', 'id')
+                            ->all();
+                    })
+                    ->helperText('Едно решение може да има само една свързана статия. Избери „Обща статия“, ако не искаш връзка към решение.'),
 
                 Textarea::make('excerpt')
                     ->label('Кратко описание')

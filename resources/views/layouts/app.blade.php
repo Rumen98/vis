@@ -21,8 +21,8 @@
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="VIS CCTV">
-    <meta property="og:title" content="ВИС - Видеонаблюдение и сигурност">
+    <meta property="og:site_name" content="ВиС CCTV">
+    <meta property="og:title" content="ВиС - Видеонаблюдение и сигурност">
     <meta property="og:description"
         content="Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи и паркинг решения.">
     <meta property="og:url" content="https://viscctv.com">
@@ -31,7 +31,7 @@
     <meta property="og:image:height" content="630">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ВИС - Видеонаблюдение и сигурност">
+    <meta name="twitter:title" content="ВиС - Видеонаблюдение и сигурност">
     <meta name="twitter:description"
         content="Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи и паркинг решения.">
     <meta name="twitter:image" content="https://viscctv.com/images/og/og-default.jpg">
@@ -71,17 +71,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-white text-slate-900" style="padding-top: env(safe-area-inset-top);">
+<body class="flex min-h-screen flex-col bg-white text-slate-900" style="padding-top: env(safe-area-inset-top);">
     <header class="bg-black text-white" style="padding-top: env(safe-area-inset-top);">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:gap-6 md:py-4">
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВИС - Видеонаблюдение и сигурност"
+                <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВиС - Видеонаблюдение и сигурност"
                     class="h-8 w-auto sm:h-9 md:h-12">
             </a>
 
             <nav class="nav-desktop items-center gap-4 text-sm">
                 <a href="{{ route('services') }}" class="hover:opacity-80">Услуги</a>
                 <a href="{{ route('solutions') }}" class="hover:opacity-80">Решения</a>
+                <a href="{{ route('tech') }}" class="hover:opacity-80">Техника</a>
                 <a href="{{ route('why') }}" class="hover:opacity-80">Защо нас</a>
                 <a href="{{ route('contact') }}" class="hover:opacity-80">Контакт</a>
                 <a href="{{ route('quote') }}" class="rounded bg-red-600 px-3 py-1 hover:bg-red-500">Оферта</a>
@@ -107,20 +108,21 @@
             <div class="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm">
                 <a href="{{ route('services') }}" class="py-2 hover:opacity-80">Услуги</a>
                 <a href="{{ route('solutions') }}" class="py-2 hover:opacity-80">Решения</a>
+                <a href="{{ route('tech') }}" class="py-2 hover:opacity-80">Техника</a>
                 <a href="{{ route('why') }}" class="py-2 hover:opacity-80">Защо нас</a>
                 <a href="{{ route('contact') }}" class="py-2 hover:opacity-80">Контакт</a>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 bg-slate-50">
+    <main class="flex-1 bg-white">
         @yield('content')
     </main>
     <footer class="bg-black text-white">
         <div class="mx-auto max-w-6xl px-4 py-10">
             <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                 <div class="flex flex-col items-center text-center md:items-start md:text-left">
-                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 md:h-12" alt="ВИС">
+                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 md:h-12" alt="ВиС">
 
                     <p class="mt-4 font-semibold text-red-600">
                         Модерни решения за защита

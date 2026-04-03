@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Contracts\View\View;
 
 class ArticleController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $articles = Article::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
+            ->active()
+            ->ordered()
             ->latest('id')
             ->get();
 
         return view('pages.articles.index', compact('articles'));
     }
 
-    public function show(string $slug)
+    public function show(string $slug): View
     {
         $article = Article::query()
-            ->where('is_active', true)
+            ->active()
             ->where('slug', $slug)
             ->firstOrFail();
 

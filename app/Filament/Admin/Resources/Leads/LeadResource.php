@@ -26,8 +26,11 @@ class LeadResource extends Resource
 
     // BG labels
     protected static ?string $navigationLabel = 'Запитвания';
+
     protected static ?string $modelLabel = 'Запитване';
+
     protected static ?string $pluralModelLabel = 'Запитвания';
+
     protected static \UnitEnum|string|null $navigationGroup = 'Контакти';
 
     public static function form(Schema $schema): Schema

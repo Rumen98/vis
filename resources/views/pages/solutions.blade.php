@@ -3,7 +3,7 @@
 @section('title', 'Решения и статии')
 
 @section('content')
-<section class="bg-slate-50">
+<section class="bg-white">
     <div class="mx-auto max-w-6xl px-4 py-14">
         <div class="max-w-3xl">
             <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
@@ -11,7 +11,7 @@
             </h1>
         </div>
 
-        <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-2">
+        <div class="mt-10 rounded-2xl border border-slate-200 bg-white p-2">
             <div class="flex flex-wrap gap-2">
                 <button type="button" data-main-tab="solutions"
                     class="main-tab-btn rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm">
@@ -27,7 +27,7 @@
 
         <div class="mt-6">
             <div id="main-tab-solutions" class="main-tab-panel">
-                <div class="rounded-2xl border border-slate-200 bg-slate-50 p-2">
+                <div class="rounded-2xl border border-slate-200 bg-white p-2">
                     <div class="flex flex-wrap gap-2">
                         <button type="button" data-solution-tab="business"
                             class="solution-tab-btn rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm">
@@ -36,7 +36,7 @@
 
                         <button type="button" data-solution-tab="smb"
                             class="solution-tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white hover:text-slate-900">
-                            SMB решения
+                            Решения за дома
                         </button>
                     </div>
                 </div>
@@ -47,66 +47,7 @@
                         @if ($businessSolutions->count())
                             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 @foreach ($businessSolutions as $solution)
-                                    @php
-                                        $href = $solution->article
-                                            ? route('articles.show', $solution->article->slug)
-                                            : null;
-                                    @endphp
-
-                                    @if ($href)
-                                        <a href="{{ $href }}"
-                                           class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                                           style="min-height: 220px;">
-                                            <div class="flex h-full flex-col">
-                                                <div class="flex items-start gap-4">
-                                                    @if (!empty($solution->icon))
-                                                        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
-                                                            <img
-                                                                src="{{ asset('icons/' . $solution->icon) }}"
-                                                                class="h-7 w-7 object-contain"
-                                                                alt="{{ $solution->title }}"
-                                                                loading="lazy"
-                                                            >
-                                                        </div>
-                                                    @endif
-
-                                                    <div class="min-w-0 flex-1">
-                                                        <h3 class="text-lg font-bold leading-tight text-slate-900" style="min-height:72px;">
-                                                            {{ $solution->title }}
-                                                        </h3>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mt-auto pt-6 text-sm font-semibold text-red-600">
-                                                    Прочети →
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @else
-                                        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-                                             style="min-height: 220px;">
-                                            <div class="flex h-full flex-col">
-                                                <div class="flex items-start gap-4">
-                                                    @if (!empty($solution->icon))
-                                                        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
-                                                            <img
-                                                                src="{{ asset('icons/' . $solution->icon) }}"
-                                                                class="h-7 w-7 object-contain"
-                                                                alt="{{ $solution->title }}"
-                                                                loading="lazy"
-                                                            >
-                                                        </div>
-                                                    @endif
-
-                                                    <div class="min-w-0 flex-1">
-                                                        <h3 class="text-lg font-bold leading-tight text-slate-900" style="min-height:72px;">
-                                                            {{ $solution->title }}
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
+                                    <x-solution-card :solution="$solution" />
                                 @endforeach
                             </div>
                         @else
@@ -121,71 +62,12 @@
                         @if ($smbSolutions->count())
                             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 @foreach ($smbSolutions as $solution)
-                                    @php
-                                        $href = $solution->article
-                                            ? route('articles.show', $solution->article->slug)
-                                            : null;
-                                    @endphp
-
-                                    @if ($href)
-                                        <a href="{{ $href }}"
-                                           class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                                           style="min-height: 220px;">
-                                            <div class="flex h-full flex-col">
-                                                <div class="flex items-start gap-4">
-                                                    @if (!empty($solution->icon))
-                                                        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
-                                                            <img
-                                                                src="{{ asset('icons/' . $solution->icon) }}"
-                                                                class="h-7 w-7 object-contain"
-                                                                alt="{{ $solution->title }}"
-                                                                loading="lazy"
-                                                            >
-                                                        </div>
-                                                    @endif
-
-                                                    <div class="min-w-0 flex-1">
-                                                        <h3 class="text-lg font-bold leading-tight text-slate-900" style="min-height:72px;">
-                                                            {{ $solution->title }}
-                                                        </h3>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mt-auto pt-6 text-sm font-semibold text-red-600">
-                                                    Прочети →
-                                                </div>
-                                            </div>
-                                        </a>
-                                    @else
-                                        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-                                             style="min-height: 220px;">
-                                            <div class="flex h-full flex-col">
-                                                <div class="flex items-start gap-4">
-                                                    @if (!empty($solution->icon))
-                                                        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
-                                                            <img
-                                                                src="{{ asset('icons/' . $solution->icon) }}"
-                                                                class="h-7 w-7 object-contain"
-                                                                alt="{{ $solution->title }}"
-                                                                loading="lazy"
-                                                            >
-                                                        </div>
-                                                    @endif
-
-                                                    <div class="min-w-0 flex-1">
-                                                        <h3 class="text-lg font-bold leading-tight text-slate-900" style="min-height:72px;">
-                                                            {{ $solution->title }}
-                                                        </h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
+                                    <x-solution-card :solution="$solution" />
                                 @endforeach
                             </div>
                         @else
                             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                                <p class="text-sm text-slate-600">Няма добавени SMB решения още.</p>
+                                <p class="text-sm text-slate-600">Няма добавени решения за дома още.</p>
                             </div>
                         @endif
                     </div>
@@ -197,7 +79,7 @@
                     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($articles as $article)
                             <a href="{{ route('articles.show', $article->slug) }}"
-                               class="block rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+                               class="block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
                                 @if (!empty($article->featured_image))
                                     <img
                                         src="{{ asset('storage/' . $article->featured_image) }}"
@@ -237,7 +119,7 @@
                         @endforeach
                     </div>
                 @else
-                    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                         <p class="text-sm text-slate-600">Няма добавени статии още.</p>
                     </div>
                 @endif

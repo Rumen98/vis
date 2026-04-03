@@ -2,9 +2,6 @@
 
 namespace App\Filament\Admin\Resources\Articles;
 
-use App\Filament\Admin\Resources\Articles\Pages\CreateArticle;
-use App\Filament\Admin\Resources\Articles\Pages\EditArticle;
-use App\Filament\Admin\Resources\Articles\Pages\ListArticles;
 use App\Filament\Admin\Resources\Articles\Schemas\ArticleForm;
 use App\Filament\Admin\Resources\Articles\Tables\ArticlesTable;
 use App\Models\Article;
@@ -23,8 +20,11 @@ class ArticleResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationLabel = 'Статии';
+
     protected static ?string $modelLabel = 'Статия';
+
     protected static ?string $pluralModelLabel = 'Статии';
+
     protected static \UnitEnum|string|null $navigationGroup = 'Съдържание';
 
     public static function form(Schema $schema): Schema

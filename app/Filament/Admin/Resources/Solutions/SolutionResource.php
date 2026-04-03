@@ -24,8 +24,11 @@ class SolutionResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationLabel = 'Решения';
+
     protected static ?string $modelLabel = 'Решение';
+
     protected static ?string $pluralModelLabel = 'Решения';
+
     protected static \UnitEnum|string|null $navigationGroup = 'Съдържание';
 
     public static function form(Schema $schema): Schema

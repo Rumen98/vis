@@ -2,11 +2,13 @@
 
 namespace App\Filament\Admin\Resources\Solutions\Schemas;
 
+use App\Models\Solution;
+use App\Support\Filament\SimpleRepeaterList;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class SolutionForm
@@ -22,13 +24,10 @@ class SolutionForm
 
                 Select::make('solution_type')
                     ->label('Тип решение')
-                    ->options([
-                        'business' => 'Бизнес решения',
-                        'smb' => 'SMB решения',
-                    ])
+                    ->options(Solution::typeOptions())
                     ->required()
                     ->native(false)
-                    ->default('business'),
+                    ->default(Solution::TYPE_BUSINESS),
 
                 Textarea::make('description')
                     ->label('Описание')
@@ -51,7 +50,7 @@ class SolutionForm
                         $record->loadMissing('article');
 
                         if ($record->article) {
-                            return '1 свързана статия: ' . $record->article->title;
+                            return '1 свързана статия: '.$record->article->title;
                         }
 
                         return 'Няма свързана статия.';
@@ -68,32 +67,8 @@ class SolutionForm
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing(function (?array $state) {
-                        $items = $state ?? [];
-                        $values = [];
-
-                        foreach ($items as $row) {
-                            $v = trim((string) ($row['value'] ?? ''));
-                            if ($v !== '') {
-                                $values[] = $v;
-                            }
-                        }
-
-                        return $values;
-                    })
-                    ->afterStateHydrated(function ($component, $state) {
-                        if (! is_array($state)) {
-                            $component->state([]);
-                            return;
-                        }
-
-                        $rows = [];
-                        foreach ($state as $v) {
-                            $rows[] = ['value' => $v];
-                        }
-
-                        $component->state($rows);
-                    }),
+                    ->dehydrateStateUsing([SimpleRepeaterList::class, 'dehydrate'])
+                    ->afterStateHydrated([SimpleRepeaterList::class, 'hydrate']),
 
                 TextInput::make('sort_order')
                     ->label('Ред')
