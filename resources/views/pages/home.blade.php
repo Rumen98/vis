@@ -119,6 +119,13 @@
         </div>
     </section>
 
+    @php($googleReviews = config('google-reviews'))
+
+    <x-google-reviews
+        :profile-url="$googleReviews['profile_url']"
+        :reviews="$googleReviews['reviews']"
+    />
+
     {{-- PROCESS --}}
     <section class="bg-slate-50">
         <div class="mx-auto max-w-6xl px-4 py-14">
