@@ -43,7 +43,7 @@ class Solution extends Model
     public function scopeWithActiveArticle(Builder $query): void
     {
         $query->with([
-            'article' => static fn (Builder $query) => $query->active(),
+            'article' => static fn ($query) => $query->active(),
         ]);
     }
 
