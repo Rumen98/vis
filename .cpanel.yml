@@ -1,16 +1,14 @@
 ---
 deployment:
   tasks:
-    - export APPPATH=/home/viscctvc/repositories/vis
-    - export PUBLICPATH=/home/viscctvc/public_html
+    - export DEPLOYPATH=/home/viscctvc/repositories/vis
 
-    - /bin/mkdir -p "$PUBLICPATH"
-    - /bin/cp -R "$APPPATH"/public/. "$PUBLICPATH"
+    - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
 
-    - cd "$APPPATH" && /usr/local/bin/php artisan optimize:clear
-    - cd "$APPPATH" && /usr/local/bin/php artisan config:cache
-    - cd "$APPPATH" && /usr/local/bin/php artisan route:cache
-    - cd "$APPPATH" && /usr/local/bin/php artisan view:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan config:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan route:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan view:cache
 
-    - /bin/mkdir -p "$PUBLICPATH"/storage
-    - /bin/cp -R "$APPPATH"/storage/app/public/. "$PUBLICPATH"/storage/
+    - cp -r $DEPLOYPATH/storage/app/public/. /home/viscctvc/public_html/storage/
+    - rm -rf /home/viscctvc/public_html/build/
+    - cp -r $DEPLOYPATH/public/build/ /home/viscctvc/public_html/build/
