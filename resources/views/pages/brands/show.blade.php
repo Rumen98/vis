@@ -143,7 +143,11 @@
         <div class="mx-auto max-w-6xl px-4 py-14">
             <h2 class="text-2xl md:text-3xl font-extrabold">Изображения</h2>
 
-            <div class="mt-8 grid gap-6 md:grid-cols-2">
+            <div @class([
+                'mt-8',
+                'max-w-4xl' => count($brand['trailing_images']) === 1,
+                'grid gap-6 md:grid-cols-2' => count($brand['trailing_images']) > 1,
+            ])>
                 @foreach ($brand['trailing_images'] as $image)
                     <div class="overflow-hidden rounded-xl border bg-white">
                         <img

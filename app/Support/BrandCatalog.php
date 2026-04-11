@@ -180,6 +180,12 @@ class BrandCatalog
         $heroImage = $galleryImages[0] ?? null;
         $sectionImages = array_slice($galleryImages, 1, count($documentData['sections']));
         $trailingImages = array_slice($galleryImages, 1 + count($sectionImages));
+        $configuredTrailingImages = $this->configuredTrailingImages($galleryImages, $definition['slug']);
+
+        if ($configuredTrailingImages !== []) {
+            $sectionImages = [];
+            $trailingImages = $configuredTrailingImages;
+        }
 
         return [
             'identifier' => $identifier,
@@ -198,6 +204,28 @@ class BrandCatalog
             'introduction_bullets' => $documentData['introduction']['bullets'],
             'sections' => $documentData['sections'],
         ];
+    }
+
+    /**
+     * @param  array<int, array<string, string>>  $galleryImages
+     * @return array<int, array<string, string>>
+     */
+    private function configuredTrailingImages(array $galleryImages, string $slug): array
+    {
+        $configuredFiles = config('brand-pages.trailing_image_overrides.'.$slug, []);
+
+        if (! is_array($configuredFiles) || $configuredFiles === []) {
+            return [];
+        }
+
+        $imagesByFile = collect($galleryImages)
+            ->keyBy(fn (array $image): string => Str::lower($image['file']));
+
+        return collect($configuredFiles)
+            ->map(fn (string $file): ?array => $imagesByFile->get(Str::lower($file)))
+            ->filter()
+            ->values()
+            ->all();
     }
 
     private function brandDefinition(string $identifier): array
