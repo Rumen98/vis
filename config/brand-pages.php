@@ -11,15 +11,9 @@ return [
             'asset_base' => 'brands',
         ],
     ],
-    'trailing_image_overrides' => [
-        'tp-link' => [
-            'tplinksolutions.png',
-        ],
-        'hikvision' => [
-            'hikvisionproducts.png',
-        ],
-        'dahua' => [
-            'dahuacameras.png',
-        ],
+    'hero_image_overrides' => [
+        'tp-link' => 'tplink.png',
+        'hikvision' => 'new_hikvision.png',
+        'dahua' => 'dahuq.png',
     ],
 ];

@@ -177,15 +177,18 @@ class BrandCatalog
         );
 
         $documentData = $this->documentData($documentFile, $definition['display_name']);
-        $heroImage = $galleryImages[0] ?? null;
-        $sectionImages = array_slice($galleryImages, 1, count($documentData['sections']));
-        $trailingImages = array_slice($galleryImages, 1 + count($sectionImages));
-        $configuredTrailingImages = $this->configuredTrailingImages($galleryImages, $definition['slug']);
+        $configuredHeroImage = $this->configuredHeroImage($galleryImages, $definition['slug']);
+        $heroImage = $configuredHeroImage ?? $galleryImages[0] ?? null;
 
-        if ($configuredTrailingImages !== []) {
-            $sectionImages = [];
-            $trailingImages = $configuredTrailingImages;
-        }
+        $remainingGallery = $heroImage
+            ? array_values(array_filter(
+                $galleryImages,
+                fn (array $image): bool => $image['file'] !== $heroImage['file']
+            ))
+            : $galleryImages;
+
+        $sectionImages = array_slice($remainingGallery, 0, count($documentData['sections']));
+        $trailingImages = array_slice($remainingGallery, count($sectionImages));
 
         return [
             'identifier' => $identifier,
@@ -208,24 +211,25 @@ class BrandCatalog
 
     /**
      * @param  array<int, array<string, string>>  $galleryImages
-     * @return array<int, array<string, string>>
+     * @return array<string, string>|null
      */
-    private function configuredTrailingImages(array $galleryImages, string $slug): array
+    private function configuredHeroImage(array $galleryImages, string $slug): ?array
     {
-        $configuredFiles = config('brand-pages.trailing_image_overrides.'.$slug, []);
+        $configuredFile = config('brand-pages.hero_image_overrides.'.$slug);
 
-        if (! is_array($configuredFiles) || $configuredFiles === []) {
-            return [];
+        if (! is_string($configuredFile) || $configuredFile === '') {
+            return null;
         }
 
-        $imagesByFile = collect($galleryImages)
-            ->keyBy(fn (array $image): string => Str::lower($image['file']));
+        $normalizedTarget = Str::lower($configuredFile);
 
-        return collect($configuredFiles)
-            ->map(fn (string $file): ?array => $imagesByFile->get(Str::lower($file)))
-            ->filter()
-            ->values()
-            ->all();
+        foreach ($galleryImages as $image) {
+            if (Str::lower($image['file']) === $normalizedTarget) {
+                return $image;
+            }
+        }
+
+        return null;
     }
 
     private function brandDefinition(string $identifier): array
