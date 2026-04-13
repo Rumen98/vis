@@ -126,7 +126,7 @@
         <div class="mx-auto max-w-6xl px-4 py-10">
             <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                 <div class="flex flex-col items-center text-center md:items-start md:text-left">
-                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 md:h-12" alt="ВиС" width="1600" height="710">
+                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 w-auto md:h-12" alt="ВиС" width="1600" height="710">
 
                     <p class="mt-4 font-semibold text-red-600">
                         Модерни решения за защита
