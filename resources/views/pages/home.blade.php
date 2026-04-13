@@ -2,6 +2,10 @@
 
 @section('title', 'Начало')
 
+@section('preload')
+    <link rel="preload" as="image" href="{{ asset('/images/hero/hero.jpg') }}">
+@endsection
+
 @section('content')
 
     @php
@@ -37,6 +41,7 @@
             alt=""
             class="absolute inset-0 h-full w-full object-cover object-[72%_center] opacity-35 md:object-right md:opacity-50"
             aria-hidden="true"
+            fetchpriority="high"
         >
 
         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/55 md:to-black/20" aria-hidden="true">
@@ -163,6 +168,8 @@
                                 src="/icons/iconiHomePage/HomePageProccessTab/64pxzapitvane.png"
                                 alt="Запитване"
                                 class="h-5 w-5 object-contain"
+                                width="64" height="64"
+                                loading="lazy"
                             >
                         </div>
 
@@ -181,6 +188,8 @@
                                 src="/icons/iconiHomePage/HomePageProccessTab/64pxogled.png"
                                 alt="Оглед и оферта"
                                 class="h-5 w-5 object-contain"
+                                width="64" height="64"
+                                loading="lazy"
                             >
                         </div>
 
@@ -199,6 +208,8 @@
                                 src="/icons/iconiHomePage/HomePageProccessTab/64pwork.png"
                                 alt="Монтаж и тест"
                                 class="h-5 w-5 object-contain"
+                                width="64" height="64"
+                                loading="lazy"
                             >
                         </div>
 

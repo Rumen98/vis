@@ -84,7 +84,7 @@
                 href="{{ route('quote') }}"
                 class="inline-flex items-center gap-2 rounded-lg bg-black px-5 py-3 font-semibold text-white hover:opacity-90"
             >
-                <img src="{{ asset('icons/64pxoffer.png') }}" class="h-5 w-5" alt="" loading="lazy">
+                <img src="{{ asset('icons/64pxoffer.png') }}" class="h-5 w-5" alt="" aria-hidden="true" width="64" height="64" loading="lazy">
                 Запитване за оферта
             </a>
         </div>

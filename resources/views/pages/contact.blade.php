@@ -26,6 +26,8 @@
                         src="/icons/64pxcontacts.png"
                         alt="Контакти"
                         class="h-5 w-5 object-contain"
+                        width="64" height="64"
+                        loading="lazy"
                     >
                 </div>
                 <h3 class="font-bold text-lg">Контакти</h3>
@@ -53,7 +55,7 @@
 
                     <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
                         <div class="h-10 w-10 flex items-center justify-center rounded-full bg-black text-white">
-                            <img src="{{ asset('icons/workTime.png') }}" class="w-5 h-5" alt="Instagram">
+                            <img src="{{ asset('icons/workTime.png') }}" class="w-5 h-5" alt="Работно време" width="64" height="64">
                         </div>
                         <h3 class="font-bold text-lg">Работно време</h3>
                     </div>
@@ -92,7 +94,7 @@
 
                         <a href="https://www.facebook.com/profile.php?id=61583394609243" target="_blank"
                             class="flex items-center gap-2 hover:scale-105 transition">
-                            <img src="{{ asset('icons/facebook.png') }}" class="w-6 h-6" alt="Facebook">
+                            <img src="{{ asset('icons/facebook.png') }}" class="w-6 h-6" alt="Facebook" width="512" height="512" loading="lazy">
                             <span class="text-slate-700 hover:text-red-600 transition">
                                 Facebook
                             </span>
@@ -100,7 +102,7 @@
 
                         <a href="https://www.instagram.com/vis.cctv/" target="_blank"
                             class="flex items-center gap-2 hover:scale-105 transition">
-                            <img src="{{ asset('icons/instagram.png') }}" class="w-6 h-6" alt="Instagram">
+                            <img src="{{ asset('icons/instagram.png') }}" class="w-6 h-6" alt="Instagram" width="512" height="512" loading="lazy">
                             <span class="text-slate-700 hover:text-red-600 transition">
                                 Instagram
                             </span>
