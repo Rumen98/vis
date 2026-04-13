@@ -24,6 +24,11 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+# WebP MIME type (needed on some servers)
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+</IfModule>
+
 # Browser caching for static assets
 <IfModule mod_expires.c>
     ExpiresActive On
