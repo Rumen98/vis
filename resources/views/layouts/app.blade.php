@@ -79,8 +79,11 @@
     <header class="bg-black text-white" style="padding-top: env(safe-area-inset-top);">
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:gap-6 md:py-4">
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВиС - Видеонаблюдение и сигурност"
-                    class="h-8 w-auto sm:h-9 md:h-12" width="1600" height="710">
+                <picture>
+                    <source srcset="{{ asset('images/logo/logo-white.webp') }}" type="image/webp">
+                    <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВиС - Видеонаблюдение и сигурност"
+                        class="h-8 w-auto sm:h-9 md:h-12" width="1600" height="710">
+                </picture>
             </a>
 
             <nav class="nav-desktop items-center gap-4 text-sm">
@@ -126,7 +129,10 @@
         <div class="mx-auto max-w-6xl px-4 py-10">
             <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                 <div class="flex flex-col items-center text-center md:items-start md:text-left">
-                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 w-auto md:h-12" alt="ВиС" width="1600" height="710">
+                    <picture>
+                        <source srcset="{{ asset('images/logo/logo-white.webp') }}" type="image/webp">
+                        <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 w-auto md:h-12" alt="ВиС" width="1600" height="710">
+                    </picture>
 
                     <p class="mt-4 font-semibold text-red-600">
                         Модерни решения за защита
@@ -155,13 +161,19 @@
                         <div class="mt-2 flex items-center gap-5">
                             <a href="https://www.facebook.com/profile.php?id=61583394609243" target="_blank"
                                 rel="noopener" class="flex items-center gap-2 transition hover:opacity-80">
-                                <img src="{{ asset('icons/facebook.png') }}" class="h-5 w-5" alt="Facebook" width="512" height="512">
+                                <picture>
+                                    <source srcset="{{ asset('icons/facebook.webp') }}" type="image/webp">
+                                    <img src="{{ asset('icons/facebook.png') }}" class="h-5 w-5" alt="Facebook" width="512" height="512">
+                                </picture>
                                 <span class="text-white/80 transition hover:text-white">Facebook</span>
                             </a>
 
                             <a href="https://www.instagram.com/vis.cctv/" target="_blank" rel="noopener"
                                 class="flex items-center gap-2 transition hover:opacity-80">
-                                <img src="{{ asset('icons/instagram.png') }}" class="h-5 w-5" alt="Instagram" width="512" height="512">
+                                <picture>
+                                    <source srcset="{{ asset('icons/instagram.webp') }}" type="image/webp">
+                                    <img src="{{ asset('icons/instagram.png') }}" class="h-5 w-5" alt="Instagram" width="512" height="512">
+                                </picture>
                                 <span class="text-white/80 transition hover:text-white">Instagram</span>
                             </a>
                         </div>

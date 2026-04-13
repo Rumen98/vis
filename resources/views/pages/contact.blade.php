@@ -94,7 +94,10 @@
 
                         <a href="https://www.facebook.com/profile.php?id=61583394609243" target="_blank"
                             class="flex items-center gap-2 hover:scale-105 transition">
-                            <img src="{{ asset('icons/facebook.png') }}" class="w-6 h-6" alt="Facebook" width="512" height="512" loading="lazy">
+                            <picture>
+                                <source srcset="{{ asset('icons/facebook.webp') }}" type="image/webp">
+                                <img src="{{ asset('icons/facebook.png') }}" class="w-6 h-6" alt="Facebook" width="512" height="512" loading="lazy">
+                            </picture>
                             <span class="text-slate-700 hover:text-red-600 transition">
                                 Facebook
                             </span>
@@ -102,7 +105,10 @@
 
                         <a href="https://www.instagram.com/vis.cctv/" target="_blank"
                             class="flex items-center gap-2 hover:scale-105 transition">
-                            <img src="{{ asset('icons/instagram.png') }}" class="w-6 h-6" alt="Instagram" width="512" height="512" loading="lazy">
+                            <picture>
+                                <source srcset="{{ asset('icons/instagram.webp') }}" type="image/webp">
+                                <img src="{{ asset('icons/instagram.png') }}" class="w-6 h-6" alt="Instagram" width="512" height="512" loading="lazy">
+                            </picture>
                             <span class="text-slate-700 hover:text-red-600 transition">
                                 Instagram
                             </span>

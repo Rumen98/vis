@@ -3,7 +3,7 @@
 @section('title', 'Начало')
 
 @section('preload')
-    <link rel="preload" as="image" href="{{ asset('/images/hero/hero.jpg') }}">
+    <link rel="preload" as="image" href="{{ asset('/images/hero/hero.webp') }}" type="image/webp">
 @endsection
 
 @section('content')
@@ -36,13 +36,16 @@
 
     {{-- HERO --}}
     <section class="relative overflow-hidden bg-black text-white">
-        <img
-            src="{{ asset('/images/hero/hero.jpg') }}"
-            alt=""
-            class="absolute inset-0 h-full w-full object-cover object-[72%_center] opacity-35 md:object-right md:opacity-50"
-            aria-hidden="true"
-            fetchpriority="high"
-        >
+        <picture>
+            <source srcset="{{ asset('/images/hero/hero.webp') }}" type="image/webp">
+            <img
+                src="{{ asset('/images/hero/hero.jpg') }}"
+                alt=""
+                class="absolute inset-0 h-full w-full object-cover object-[72%_center] opacity-35 md:object-right md:opacity-50"
+                aria-hidden="true"
+                fetchpriority="high"
+            >
+        </picture>
 
         <div class="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/55 md:to-black/20" aria-hidden="true">
         </div>
