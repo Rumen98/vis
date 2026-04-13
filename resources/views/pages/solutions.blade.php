@@ -128,7 +128,7 @@
     </div>
 </section>
 
-<script>
+<script nonce="{{ Vite::cspNonce() }}">
     (function () {
         const mainButtons = document.querySelectorAll('.main-tab-btn');
         const mainPanels = document.querySelectorAll('.main-tab-panel');

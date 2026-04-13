@@ -144,7 +144,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm">
                                     {{-- Search / analysis icon --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <circle cx="11" cy="11" r="7"></circle>
                                         <path d="M21 21l-4.3-4.3"></path>
                                     </svg>
@@ -160,7 +160,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm">
                                     {{-- Lightbulb / solution icon --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <path d="M9 18h6"></path>
                                         <path d="M10 22h4"></path>
                                         <path d="M12 2a7 7 0 0 0-4 12c.7.6 1 1.4 1 2h6c0-.6.3-1.4 1-2A7 7 0 0 0 12 2z"></path>
@@ -177,7 +177,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm">
                                     {{-- Tools / installation icon --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <path d="M14.7 6.3a4 4 0 0 0-5.7 5.6l-6 6a2 2 0 0 0 2.8 2.8l6-6a4 4 0 0 0 5.9-5.4l-2.3 2.3-2.8-2.8 2.1-2.5z"></path>
                                     </svg>
                                 </span>
@@ -192,7 +192,7 @@
                             <div class="flex items-start gap-3">
                                 <span class="mt-0.5 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-sm">
                                     {{-- Shield / support icon --}}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                                         <path d="M12 2l8 4v6c0 5-3.4 9.4-8 10-4.6-.6-8-5-8-10V6l8-4z"></path>
                                         <path d="M9 12l2 2 4-4"></path>
                                     </svg>
@@ -236,7 +236,7 @@
     </div>
 </section>
 
-<script>
+<script nonce="{{ Vite::cspNonce() }}">
     // Tabs logic (vanilla, no dependencies)
     (function () {
         const buttons = document.querySelectorAll('.tab-btn');

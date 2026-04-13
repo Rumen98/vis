@@ -42,6 +42,10 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
         rel="stylesheet">
 
+    @hasSection('preload')
+        @yield('preload')
+    @endif
+
     <style>
         @media (min-width: 1024px) {
             .nav-desktop {
@@ -76,7 +80,7 @@
         <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:gap-6 md:py-4">
             <a href="{{ route('home') }}" class="flex items-center">
                 <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВиС - Видеонаблюдение и сигурност"
-                    class="h-8 w-auto sm:h-9 md:h-12">
+                    class="h-8 w-auto sm:h-9 md:h-12" width="1600" height="710">
             </a>
 
             <nav class="nav-desktop items-center gap-4 text-sm">
@@ -94,7 +98,7 @@
                     Оферта
                 </a>
 
-                <button type="button" id="mobileMenuBtn" aria-controls="mobileMenu" aria-expanded="false"
+                <button type="button" id="mobileMenuBtn" aria-controls="mobileMenu" aria-expanded="false" aria-label="Меню"
                     class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-white/5 hover:bg-white/10">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round">
@@ -122,7 +126,7 @@
         <div class="mx-auto max-w-6xl px-4 py-10">
             <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
                 <div class="flex flex-col items-center text-center md:items-start md:text-left">
-                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 md:h-12" alt="ВиС">
+                    <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 md:h-12" alt="ВиС" width="1600" height="710">
 
                     <p class="mt-4 font-semibold text-red-600">
                         Модерни решения за защита
@@ -151,13 +155,13 @@
                         <div class="mt-2 flex items-center gap-5">
                             <a href="https://www.facebook.com/profile.php?id=61583394609243" target="_blank"
                                 rel="noopener" class="flex items-center gap-2 transition hover:opacity-80">
-                                <img src="{{ asset('icons/facebook.png') }}" class="h-5 w-5" alt="Facebook">
+                                <img src="{{ asset('icons/facebook.png') }}" class="h-5 w-5" alt="Facebook" width="512" height="512">
                                 <span class="text-white/80 transition hover:text-white">Facebook</span>
                             </a>
 
                             <a href="https://www.instagram.com/vis.cctv/" target="_blank" rel="noopener"
                                 class="flex items-center gap-2 transition hover:opacity-80">
-                                <img src="{{ asset('icons/instagram.png') }}" class="h-5 w-5" alt="Instagram">
+                                <img src="{{ asset('icons/instagram.png') }}" class="h-5 w-5" alt="Instagram" width="512" height="512">
                                 <span class="text-white/80 transition hover:text-white">Instagram</span>
                             </a>
                         </div>
@@ -171,7 +175,7 @@
         </div>
     </footer>
 
-    <script>
+    <script nonce="{{ Vite::cspNonce() }}">
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('mobileMenuBtn');
             const menu = document.getElementById('mobileMenu');
