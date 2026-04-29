@@ -53,7 +53,7 @@ class Solution extends Model
             $query->whereDoesntHave('article');
 
             if ($currentSolutionId !== null) {
-                $query->orWhereKey($currentSolutionId);
+                $query->orWhere($this->getQualifiedKeyName(), $currentSolutionId);
             }
         });
     }
