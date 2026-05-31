@@ -5,6 +5,8 @@ deployment:
 
     - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
 
+    - /usr/local/bin/php $DEPLOYPATH/artisan migrate --force
+
     - /usr/local/bin/php $DEPLOYPATH/artisan config:cache
     - /usr/local/bin/php $DEPLOYPATH/artisan route:cache
     - /usr/local/bin/php $DEPLOYPATH/artisan view:cache
@@ -12,3 +14,5 @@ deployment:
     - cp -r $DEPLOYPATH/storage/app/public/. /home/viscctvc/public_html/storage/
     - rm -rf /home/viscctvc/public_html/build/
     - cp -r $DEPLOYPATH/public/build/ /home/viscctvc/public_html/build/
+    - mkdir -p /home/viscctvc/public_html/videos
+    - cp -r $DEPLOYPATH/public/videos/. /home/viscctvc/public_html/videos/

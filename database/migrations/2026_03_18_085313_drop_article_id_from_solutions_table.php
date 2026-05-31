@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,11 +12,15 @@ return new class extends Migration
             return;
         }
 
-        try {
-            DB::statement('ALTER TABLE `solutions` DROP FOREIGN KEY `solutions_article_id_foreign`');
-        } catch (\Throwable $e) {
-            // Foreign key may not exist. Ignore and continue.
-        }
+        // Cross-database compatible: dropForeign generates the correct
+        // constraint name on MySQL and rebuilds the table on SQLite.
+        Schema::table('solutions', function (Blueprint $table) {
+            try {
+                $table->dropForeign(['article_id']);
+            } catch (\Throwable $e) {
+                // Foreign key may not exist. Ignore and continue.
+            }
+        });
 
         Schema::table('solutions', function (Blueprint $table) {
             $table->dropColumn('article_id');

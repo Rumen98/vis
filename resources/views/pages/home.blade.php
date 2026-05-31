@@ -67,6 +67,14 @@
                 чист монтаж и поддръжка.
             </p>
 
+            <div class="mt-5 flex items-center gap-2 text-sm text-white/90 sm:text-base">
+                <svg class="h-5 w-5 shrink-0 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" stroke-linejoin="round"/>
+                    <circle cx="12" cy="10" r="2.5"/>
+                </svg>
+                <span>Работим в <strong class="font-semibold text-white">София и региона</strong>.</span>
+            </div>
+
             <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
                 <a
                     href="{{ route('services') }}"
@@ -80,6 +88,15 @@
                     class="rounded-lg bg-red-600 px-5 py-3 text-center font-semibold hover:bg-red-500"
                 >
                     Запитване за оферта
+                </a>
+
+                <a
+                    href="https://tools.viscctv.com"
+                    target="_blank"
+                    rel="noopener"
+                    class="rounded-lg border-2 border-red-600 bg-black px-5 py-3 text-center font-semibold text-white transition hover:bg-red-600"
+                >
+                    Планирай система
                 </a>
             </div>
         </div>
@@ -148,208 +165,54 @@
         </div>
     </section>
 
+    {{-- VIDEO PRESENTATION (заменя секцията с пакети) --}}
     @php
-        $securityPackages = [
-            [
-                'key' => 'basic',
-                'title' => 'БАЗОВ',
-                'suitable' => 'Подходящ за апартаменти, малки обекти и входове',
-                'price' => 'От 649€',
-                'note' => 'Включен монтаж и настройка',
-                'items' => [
-                    'До 3 камери',
-                    'Записващо устройство',
-                    'Монтаж и настройка',
-                    'Достъп през телефон',
-                    'Основно покритие на обекта',
-                ],
-                'accent' => 'green',
-                'buttonClass' => 'border border-red-600 text-red-600 hover:bg-red-600 hover:text-white',
-            ],
-            [
-                'key' => 'standard',
-                'title' => 'СТАНДАРТ',
-                'badge' => 'НАЙ-ИЗБИРАН',
-                'suitable' => 'Подходящ за къщи, офиси, малък и среден бизнес',
-                'price' => 'От 1049€',
-                'note' => 'Включен монтаж и настройка',
-                'items' => [
-                    '4 до 6 камери',
-                    'По-добро покритие',
-                    'Повече интелигентни функции',
-                    'Записващо устройство',
-                    'Монтаж и настройка',
-                    'Достъп през телефон',
-                    '+ 1 година включена поддръжка',
-                ],
-                'accent' => 'red',
-                'featured' => true,
-                'buttonClass' => 'bg-red-600 text-white hover:bg-red-500',
-            ],
-            [
-                'key' => 'premium',
-                'title' => 'ПРЕМИУМ',
-                'suitable' => 'Подходящ за по-големи обекти, търговски площи и бизнеси',
-                'price' => 'От 1649€',
-                'note' => 'Включен монтаж и настройка',
-                'items' => [
-                    '6 до 10+ камери',
-                    'Пълно покритие на обекта',
-                    'Разширено наблюдение',
-                    'Записващо устройство',
-                    'Монтаж и настройка',
-                    'Достъп през телефон',
-                    '+ 1 година приоритетна поддръжка',
-                ],
-                'accent' => 'dark',
-                'buttonClass' => 'bg-slate-950 text-white hover:bg-slate-800',
-            ],
-        ];
+        $siteSetting = \App\Models\SiteSetting::current();
+
+        $homeVideoUrl = $siteSetting->home_video_path
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($siteSetting->home_video_path)
+            : (file_exists(public_path('videos/home.mp4')) ? asset('videos/home.mp4') : null);
+
+        $homeVideoPoster = $siteSetting->home_video_poster
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($siteSetting->home_video_poster)
+            : (file_exists(public_path('videos/home-poster.jpg')) ? asset('videos/home-poster.jpg') : null);
     @endphp
 
-    {{-- SECURITY PACKAGES --}}
-    <section class="bg-slate-50">
-        <div class="mx-auto max-w-6xl px-4 py-14">
-            <div class="mx-auto max-w-4xl text-center">
-                <p class="text-xs font-bold uppercase tracking-[0.3em] text-red-600">
-                    ПАКЕТИ ВИДЕОНАБЛЮДЕНИЕ ЗА МАКСИМАЛНА СИГУРНОСТ
-                </p>
+    {{-- Клипът запълва плътно целия див: пълна широчина и височина (16:9), без заглавие --}}
+    <section>
+        <div class="relative aspect-video w-full overflow-hidden bg-slate-200">
+            @if ($homeVideoUrl)
+                <video
+                    class="absolute inset-0 h-full w-full object-cover"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    @if ($homeVideoPoster) poster="{{ $homeVideoPoster }}" @endif
+                >
+                    <source src="{{ $homeVideoUrl }}" type="video/mp4">
+                </video>
+            @elseif ($homeVideoPoster)
+                <img src="{{ $homeVideoPoster }}" alt="" class="absolute inset-0 h-full w-full object-cover">
+            @endif
 
-                <h2 class="mt-3 text-2xl font-extrabold leading-tight md:text-3xl">
-                    Избери готово решение за максимална сигурност на твоя дом или бизнес
-                </h2>
-            </div>
+            {{-- Лек градиент само отдолу, за да не пречи на текста в клипа --}}
+            <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
 
-            <div class="mt-8 grid gap-5 md:grid-cols-3 md:items-stretch">
-                @foreach ($securityPackages as $package)
-                    @php
-                        $isFeatured = $package['featured'] ?? false;
-                        $accentClasses = match ($package['accent']) {
-                            'green' => [
-                                'iconWrap' => 'bg-green-50 text-green-600',
-                                'title' => 'text-green-600',
-                                'check' => 'text-green-600',
-                            ],
-                            'red' => [
-                                'iconWrap' => 'bg-red-50 text-red-600',
-                                'title' => 'text-red-600',
-                                'check' => 'text-red-600',
-                            ],
-                            default => [
-                                'iconWrap' => 'bg-slate-100 text-slate-950',
-                                'title' => 'text-slate-950',
-                                'check' => 'text-slate-950',
-                            ],
-                        };
-                    @endphp
-
-                    <article
-                        class="relative flex h-full flex-col rounded-xl border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md md:p-6 {{ $isFeatured ? 'border-red-500 md:-mt-3 md:mb-3' : 'border-slate-200' }}"
+            {{-- Бутон най-долу на видеото (текст и линк се управляват от админ панела) --}}
+            @if ($siteSetting->videoButtonEnabled())
+                <div class="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-4 sm:pb-6">
+                    <a
+                        href="{{ $siteSetting->videoButtonUrl() }}"
+                        target="_blank"
+                        rel="noopener"
+                        class="inline-flex items-center justify-center rounded-lg border-2 border-red-600 bg-black/80 px-6 py-3 text-center font-semibold text-white backdrop-blur-sm transition hover:bg-red-600"
                     >
-                        @if ($isFeatured)
-                            <span class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600 px-4 py-1 text-[11px] font-extrabold uppercase tracking-wide text-white">
-                                {{ $package['badge'] }}
-                            </span>
-                        @endif
-
-                        <div class="flex h-14 w-14 items-center justify-center rounded-full {{ $accentClasses['iconWrap'] }}">
-                            <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                <path d="M12 3.75 5.75 6.1v4.7c0 4.1 2.55 7.8 6.25 9.45 3.7-1.65 6.25-5.35 6.25-9.45V6.1L12 3.75Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-                                <path d="m9.25 12 1.8 1.8 3.95-4.05" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-extrabold {{ $accentClasses['title'] }}">
-                            {{ $package['title'] }}
-                        </h3>
-
-                        <p class="mt-2 min-h-[3rem] text-sm leading-6 text-slate-600">
-                            {{ $package['suitable'] }}
-                        </p>
-
-                        <div class="mt-5">
-                            <p class="text-4xl font-extrabold tracking-tight text-slate-950">
-                                {{ $package['price'] }}
-                            </p>
-                            <p class="mt-1 text-sm font-semibold text-slate-500">
-                                {{ $package['note'] }}
-                            </p>
-                        </div>
-
-                        <ul class="mt-6 space-y-3 text-sm text-slate-700">
-                            @foreach ($package['items'] as $item)
-                                <li class="flex items-start gap-3">
-                                    <svg class="mt-0.5 h-5 w-5 shrink-0 {{ $accentClasses['check'] }}" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                                        <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/>
-                                        <path d="m6.5 10.2 2.25 2.25 4.75-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    <span class="{{ str_starts_with($item, '+') ? 'font-bold text-slate-950' : '' }}">
-                                        {{ $item }}
-                                    </span>
-                                </li>
-                            @endforeach
-                        </ul>
-
-                        <a
-                            href="{{ route('quote', ['package' => $package['key']]) }}"
-                            class="mt-8 inline-flex w-full items-center justify-center rounded-lg px-4 py-3 text-center text-sm font-bold transition {{ $package['buttonClass'] }}"
-                        >
-                            Вземи оферта
-                        </a>
-                    </article>
-                @endforeach
-            </div>
-
-            <div class="mt-6 grid gap-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-[1fr_0.8fr] md:p-6">
-                <div class="flex gap-4">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M10.75 18.5a7.75 7.75 0 1 1 5.48-13.23 7.75 7.75 0 0 1-5.48 13.23Z" stroke="currentColor" stroke-width="1.7"/>
-                            <path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <p class="text-sm leading-6 text-slate-700">
-                        Крайната цена се определя след безплатен оглед според обекта, избраното оборудване и специфичните изисквания. Всеки от пакетите включва висок клас техника.
-                    </p>
+                        {{ $siteSetting->videoButtonLabel() }}
+                    </a>
                 </div>
-
-                <div class="flex gap-4 border-slate-200 md:border-l md:pl-6">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600">
-                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M19.25 12a7.25 7.25 0 1 1-14.5 0 7.25 7.25 0 0 1 14.5 0Z" stroke="currentColor" stroke-width="1.7"/>
-                            <path d="M18.25 4.75 20 3m-14.25 1.75L4 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <p class="text-sm font-bold leading-6 text-slate-950">
-                        Безплатен оглед и оферта до 24 часа.
-                    </p>
-                </div>
-            </div>
-
-            <div class="mt-6 text-center">
-                <a
-                    href="{{ route('services') }}"
-                    class="inline-flex items-center justify-center rounded-lg border border-red-600 bg-white px-5 py-3 text-sm font-bold text-red-600 transition hover:bg-red-600 hover:text-white"
-                >
-                    Разгледай всички услуги
-                </a>
-            </div>
-
-            <div class="mx-auto mt-7 max-w-2xl text-center">
-                <h3 class="text-xl font-extrabold text-slate-950">
-                    Не сте сигурни кой пакет е подходящ за Вас?
-                </h3>
-                <p class="mt-2 text-sm text-slate-600">
-                    Свържете се с нас за безплатен оглед и персонална оферта.
-                </p>
-                <a
-                    href="{{ route('quote') }}"
-                    class="mt-5 inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-500"
-                >
-                    Свържи се с нас
-                </a>
-            </div>
+            @endif
         </div>
     </section>
 

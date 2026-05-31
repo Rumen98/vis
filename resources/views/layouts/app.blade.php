@@ -82,7 +82,7 @@
                 <picture>
                     <source srcset="{{ asset('images/logo/logo-white.webp') }}" type="image/webp">
                     <img src="{{ asset('images/logo/logo-white.png') }}" alt="ВиС - Видеонаблюдение и сигурност"
-                        class="h-8 w-auto sm:h-9 md:h-12" width="1600" height="710">
+                        class="h-8 w-auto sm:h-9 md:h-12" width="1600" height="549">
                 </picture>
             </a>
 
@@ -131,7 +131,7 @@
                 <div class="flex flex-col items-center text-center md:items-start md:text-left">
                     <picture>
                         <source srcset="{{ asset('images/logo/logo-white.webp') }}" type="image/webp">
-                        <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 w-auto md:h-12" alt="ВиС" width="1600" height="710">
+                        <img src="{{ asset('images/logo/logo-white.png') }}" class="h-10 w-auto md:h-12" alt="ВиС" width="1600" height="549">
                     </picture>
 
                     <p class="mt-4 font-semibold text-red-600">
