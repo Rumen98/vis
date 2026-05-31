@@ -197,12 +197,12 @@
                 <img src="{{ $homeVideoPoster }}" alt="" class="absolute inset-0 h-full w-full object-cover">
             @endif
 
-            {{-- Лек градиент само отдолу, за да не пречи на текста в клипа --}}
-            <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
+            {{-- Градиент отдолу (само там, където бутонът стои върху клипа) --}}
+            <div class="absolute inset-x-0 bottom-0 hidden h-1/3 bg-gradient-to-t from-black/60 to-transparent sm:block" aria-hidden="true"></div>
 
-            {{-- Бутон най-долу на видеото (текст и линк се управляват от админ панела) --}}
+            {{-- Бутон ВЪРХУ клипа — само таблет/десктоп (текст и линк от админ панела) --}}
             @if ($siteSetting->videoButtonEnabled())
-                <div class="absolute inset-x-0 bottom-0 flex justify-center px-4 pb-4 sm:pb-6">
+                <div class="absolute inset-x-0 bottom-0 hidden justify-center px-4 pb-6 sm:flex">
                     <a
                         href="{{ $siteSetting->videoButtonUrl() }}"
                         target="_blank"
@@ -214,6 +214,20 @@
                 </div>
             @endif
         </div>
+
+        {{-- Бутон ПОД клипа — само мобилно, за да не пада върху текста в клипа --}}
+        @if ($siteSetting->videoButtonEnabled())
+            <div class="flex justify-center bg-black px-4 py-4 sm:hidden">
+                <a
+                    href="{{ $siteSetting->videoButtonUrl() }}"
+                    target="_blank"
+                    rel="noopener"
+                    class="inline-flex w-full max-w-xs items-center justify-center rounded-lg border-2 border-red-600 bg-black px-6 py-3 text-center font-semibold text-white transition hover:bg-red-600"
+                >
+                    {{ $siteSetting->videoButtonLabel() }}
+                </a>
+            </div>
+        @endif
     </section>
 
     @php($googleReviews = config('google-reviews'))
