@@ -261,56 +261,42 @@
             : (file_exists(public_path('videos/home-poster.jpg')) ? asset('videos/home-poster.jpg') : null);
     @endphp
 
-    {{-- Клипът запълва плътно целия див: пълна широчина и височина (16:9), без заглавие --}}
-    <section>
-        <div class="relative aspect-video w-full overflow-hidden bg-slate-200">
-            @if ($homeVideoUrl)
-                <video
-                    class="absolute inset-0 h-full w-full object-cover"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    preload="metadata"
-                    @if ($homeVideoPoster) poster="{{ $homeVideoPoster }}" @endif
-                >
-                    <source src="{{ $homeVideoUrl }}" type="video/mp4">
-                </video>
-            @elseif ($homeVideoPoster)
-                <img src="{{ $homeVideoPoster }}" alt="" class="absolute inset-0 h-full w-full object-cover">
-            @endif
+    {{-- ВИДЕО — контейнер 1200×450 (8:3), центриран, responsive (Задача 6) --}}
+    <section class="bg-white">
+        <div class="mx-auto max-w-6xl px-4 py-12">
+            <div class="relative mx-auto aspect-[8/3] w-full max-w-[1200px] overflow-hidden rounded-2xl bg-slate-200 shadow-lg">
+                @if ($homeVideoUrl)
+                    <video
+                        class="absolute inset-0 h-full w-full object-cover"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        @if ($homeVideoPoster) poster="{{ $homeVideoPoster }}" @endif
+                    >
+                        <source src="{{ $homeVideoUrl }}" type="video/mp4">
+                    </video>
+                @elseif ($homeVideoPoster)
+                    <img src="{{ $homeVideoPoster }}" alt="" class="absolute inset-0 h-full w-full object-cover">
+                @endif
 
-            {{-- Градиент отдолу (само там, където бутонът стои върху клипа) --}}
-            <div class="absolute inset-x-0 bottom-0 hidden h-1/3 bg-gradient-to-t from-black/60 to-transparent sm:block" aria-hidden="true"></div>
+            </div>
 
-            {{-- Бутон ВЪРХУ клипа — само таблет/десктоп (текст и линк от админ панела) --}}
+            {{-- Бутон ПОД клипа (за всички екрани — клипът е малък, за да не пада върху текста) --}}
             @if ($siteSetting->videoButtonEnabled())
-                <div class="absolute inset-x-0 bottom-0 hidden justify-center px-4 pb-6 sm:flex">
+                <div class="mt-5 flex justify-center">
                     <a
                         href="{{ $siteSetting->videoButtonUrl() }}"
                         target="_blank"
                         rel="noopener"
-                        class="inline-flex items-center justify-center rounded-lg border-2 border-red-600 bg-black/80 px-6 py-3 text-center font-semibold text-white backdrop-blur-sm transition hover:bg-red-600"
+                        class="inline-flex w-full max-w-xs items-center justify-center rounded-lg border-2 border-red-600 bg-black px-6 py-3 text-center font-semibold text-white transition hover:bg-red-600"
                     >
                         {{ $siteSetting->videoButtonLabel() }}
                     </a>
                 </div>
             @endif
         </div>
-
-        {{-- Бутон ПОД клипа — само мобилно, за да не пада върху текста в клипа --}}
-        @if ($siteSetting->videoButtonEnabled())
-            <div class="flex justify-center bg-black px-4 py-4 sm:hidden">
-                <a
-                    href="{{ $siteSetting->videoButtonUrl() }}"
-                    target="_blank"
-                    rel="noopener"
-                    class="inline-flex w-full max-w-xs items-center justify-center rounded-lg border-2 border-red-600 bg-black px-6 py-3 text-center font-semibold text-white transition hover:bg-red-600"
-                >
-                    {{ $siteSetting->videoButtonLabel() }}
-                </a>
-            </div>
-        @endif
     </section>
 
     {{-- УСЛУГИ под видеото (Задача 2) --}}
