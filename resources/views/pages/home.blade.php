@@ -165,6 +165,89 @@
         </div>
     </section>
 
+    {{-- РЕШЕНИЯ СПОРЕД ОБЕКТА (Задача 1) --}}
+    @php
+        $objectSolutions = [
+            [
+                'title' => 'Къщи и вили',
+                'text' => 'Защита за дома и близките ви.',
+                'image' => 'images/objects/houses.jpg',
+                'icon' => 'M3 11.5 12 4l9 7.5M5.5 9.8V19a1 1 0 0 0 1 1H10v-5h4v5h3.5a1 1 0 0 0 1-1V9.8',
+            ],
+            [
+                'title' => 'Офиси',
+                'text' => 'Сигурност и спокойствие за вашия бизнес.',
+                'image' => 'images/objects/offices.jpg',
+                'icon' => 'M4 21h16M6 21V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v16M15 21V9h3a1 1 0 0 1 1 1v11M9 8h2M9 12h2M9 16h2',
+            ],
+            [
+                'title' => 'Заведения',
+                'text' => 'Дискретност, контрол и безпроблемна работа.',
+                'image' => 'images/objects/venues.jpg',
+                'icon' => 'M5 4v5a3 3 0 0 0 6 0V4M8 12v8M17 4c-1.5 0-2.5 2-2.5 4.5S15.5 13 17 13s2.5-2 2.5-4.5S18.5 4 17 4ZM17 13v7',
+            ],
+            [
+                'title' => 'Магазини',
+                'text' => 'Надежден контрол и защита на търговски обекти.',
+                'image' => 'images/objects/shops.jpg',
+                'icon' => 'M4 9 5 4h14l1 5M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M4 9h16M9.5 13h5',
+            ],
+        ];
+    @endphp
+
+    <section class="bg-white">
+        <div class="mx-auto max-w-6xl px-4 pb-4 pt-2">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.3em] text-red-600">Решения според обекта</p>
+                    <h2 class="mt-2 text-2xl font-extrabold leading-tight md:text-3xl">
+                        Подходящо решение за всеки тип обект
+                    </h2>
+                </div>
+
+                <a href="{{ route('solutions') }}" class="text-sm font-semibold text-red-600 hover:text-red-700">
+                    Виж всички решения →
+                </a>
+            </div>
+
+            <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                @foreach ($objectSolutions as $card)
+                    <a
+                        href="{{ route('solutions') }}"
+                        class="group relative flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-2xl bg-slate-900 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+                    >
+                        @if (file_exists(public_path($card['image'])))
+                            <img src="{{ asset($card['image']) }}" alt="{{ $card['title'] }}"
+                                class="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-300 group-hover:scale-105"
+                                loading="lazy">
+                        @endif
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" aria-hidden="true"></div>
+
+                        {{-- червена иконка горе вляво --}}
+                        <div class="absolute left-5 top-5 flex h-11 w-11 items-center justify-center rounded-xl bg-red-600 text-white shadow">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="{{ $card['icon'] }}" />
+                            </svg>
+                        </div>
+
+                        {{-- заглавие + текст долу + стрелка --}}
+                        <div class="relative">
+                            <h3 class="pr-10 text-lg font-extrabold text-white">{{ $card['title'] }}</h3>
+                            <p class="mt-1 pr-10 text-sm leading-6 text-white/80">{{ $card['text'] }}</p>
+                        </div>
+
+                        <span class="absolute bottom-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/40 text-white transition group-hover:border-red-500 group-hover:bg-red-600">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- VIDEO PRESENTATION (заменя секцията с пакети) --}}
     @php
         $siteSetting = \App\Models\SiteSetting::current();
