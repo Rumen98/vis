@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Service;
 use App\Models\Solution;
 use App\Support\BrandCatalog;
 use Illuminate\Contracts\View\View;
@@ -13,7 +14,13 @@ class PageController extends Controller
 {
     public function home(): View
     {
-        return view('pages.home');
+        $homeServices = Service::query()
+            ->active()
+            ->ordered()
+            ->take(4)
+            ->get();
+
+        return view('pages.home', compact('homeServices'));
     }
 
     public function solutions(): View

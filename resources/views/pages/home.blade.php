@@ -313,6 +313,55 @@
         @endif
     </section>
 
+    {{-- УСЛУГИ под видеото (Задача 2) --}}
+    @if (isset($homeServices) && $homeServices->count())
+        <section class="bg-slate-50">
+            <div class="mx-auto max-w-6xl px-4 py-14">
+                <div class="flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.3em] text-red-600">Услуги</p>
+                        <h2 class="mt-2 text-2xl font-extrabold leading-tight md:text-3xl">
+                            Какво предлагаме
+                        </h2>
+                    </div>
+
+                    <a href="{{ route('services') }}" class="text-sm font-semibold text-red-600 hover:text-red-700">
+                        Виж всичките ни услуги →
+                    </a>
+                </div>
+
+                <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                    @foreach ($homeServices as $service)
+                        <a
+                            href="{{ route('services') }}"
+                            class="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                        >
+                            @if (! empty($service->icon))
+                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-red-600 shadow">
+                                    <img src="{{ asset('icons/' . $service->icon) }}" class="h-6 w-6 object-contain" alt="{{ $service->title }}" loading="lazy">
+                                </div>
+                            @endif
+
+                            <h3 class="mt-4 text-base font-bold leading-tight text-slate-900 md:text-lg">
+                                {{ $service->title }}
+                            </h3>
+
+                            @if (! empty($service->description))
+                                <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">
+                                    {{ $service->description }}
+                                </p>
+                            @endif
+
+                            <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-red-600">
+                                Научи повече →
+                            </span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
     @php($googleReviews = config('google-reviews'))
 
     <x-google-reviews
