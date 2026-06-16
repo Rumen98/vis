@@ -427,4 +427,35 @@
         </div>
     </section>
 
+    {{-- ЛИНК КЪМ СТАТИИ под „Процес" (Задача 5) --}}
+    <section class="bg-slate-50">
+        <div class="mx-auto max-w-6xl px-4 pb-14">
+            <a
+                href="{{ route('articles.index') }}"
+                class="group flex flex-col items-start gap-4 rounded-2xl bg-slate-900 p-6 text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
+            >
+                <div class="flex items-center gap-4">
+                    <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-600 shadow">
+                        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 5h11a1 1 0 0 1 1 1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5Z" />
+                            <path d="M16 8h3a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2M7 8h6M7 12h6M7 16h4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold leading-snug md:text-lg">
+                            Вижте всички новости в света на охранителните системи тук
+                        </h3>
+                        <p class="mt-1 text-sm text-white/70">
+                            Статии, съвети и тенденции за видеонаблюдение и сигурност.
+                        </p>
+                    </div>
+                </div>
+
+                <span class="inline-flex shrink-0 items-center gap-2 rounded-lg border-2 border-red-600 px-5 py-2.5 text-sm font-semibold transition group-hover:bg-red-600">
+                    Към статиите →
+                </span>
+            </a>
+        </div>
+    </section>
+
 @endsection
