@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServicesController;
@@ -24,6 +25,7 @@ Route::controller(PageController::class)->group(function (): void {
 });
 
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
+Route::get('/gallery/load', [GalleryController::class, 'load'])->name('gallery.load');
 Route::redirect('/tech', '/tehnika', 301);
 
 Route::controller(ArticleController::class)

@@ -348,6 +348,98 @@
         </section>
     @endif
 
+    {{-- ГАЛЕРИЯ „Нашата работа" (Задача 3) — админ-управляема, lazy-load --}}
+    @if ($galleryImages->isNotEmpty())
+        <section class="bg-white">
+            <div class="mx-auto max-w-6xl px-4 py-14">
+                <div class="flex flex-wrap items-end justify-between gap-3">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.3em] text-red-600">Реализирани обекти</p>
+                        <h2 class="mt-2 text-2xl font-extrabold leading-tight md:text-3xl">
+                            Нашата работа
+                        </h2>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <button type="button" data-gallery-arrow="prev" aria-label="Назад"
+                            class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-red-600 hover:bg-red-600 hover:text-white">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6" /></svg>
+                        </button>
+                        <button type="button" data-gallery-arrow="next" aria-label="Напред"
+                            class="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 text-slate-700 transition hover:border-red-600 hover:bg-red-600 hover:text-white">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div
+                    id="gallery-strip"
+                    data-has-more="{{ $galleryHasMore ? '1' : '0' }}"
+                    class="mt-8 flex snap-x gap-4 overflow-x-auto scroll-smooth pb-3"
+                >
+                    @include('partials.gallery-list', ['images' => $galleryImages])
+                </div>
+
+                @if ($galleryHasMore)
+                    <div class="mt-6 text-center">
+                        <button type="button" id="gallery-more" data-page="2"
+                            class="inline-flex items-center justify-center rounded-lg border-2 border-red-600 px-5 py-3 text-sm font-bold text-red-600 transition hover:bg-red-600 hover:text-white">
+                            Виж още
+                        </button>
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        <script nonce="{{ Vite::cspNonce() }}">
+            (function () {
+                var strip = document.getElementById('gallery-strip');
+                if (!strip) return;
+
+                var page = 2;
+                var hasMore = strip.getAttribute('data-has-more') === '1';
+                var loading = false;
+                var moreBtn = document.getElementById('gallery-more');
+
+                function loadMore() {
+                    if (loading || !hasMore) return;
+                    loading = true;
+                    if (moreBtn) moreBtn.disabled = true;
+
+                    fetch('{{ route('gallery.load') }}?page=' + page, { headers: { 'Accept': 'application/json' } })
+                        .then(function (r) { return r.json(); })
+                        .then(function (data) {
+                            strip.insertAdjacentHTML('beforeend', data.html);
+                            hasMore = !!data.hasMore;
+                            page += 1;
+                            loading = false;
+                            if (moreBtn) {
+                                if (hasMore) { moreBtn.disabled = false; }
+                                else { moreBtn.remove(); }
+                            }
+                        })
+                        .catch(function () { loading = false; if (moreBtn) moreBtn.disabled = false; });
+                }
+
+                document.querySelectorAll('[data-gallery-arrow]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var dir = btn.getAttribute('data-gallery-arrow') === 'next' ? 1 : -1;
+                        strip.scrollBy({ left: dir * Math.round(strip.clientWidth * 0.8), behavior: 'smooth' });
+                    });
+                });
+
+                // Lazy-load при достигане на края на лентата
+                strip.addEventListener('scroll', function () {
+                    if (strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 300) {
+                        loadMore();
+                    }
+                });
+
+                if (moreBtn) moreBtn.addEventListener('click', loadMore);
+            })();
+        </script>
+    @endif
+
     @php($googleReviews = config('google-reviews'))
 
     <x-google-reviews

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\GalleryImage;
 use App\Models\Service;
 use App\Models\Solution;
 use App\Support\BrandCatalog;
@@ -20,7 +21,16 @@ class PageController extends Controller
             ->take(4)
             ->get();
 
-        return view('pages.home', compact('homeServices'));
+        $galleryQuery = GalleryImage::query()->active()->ordered()->orderBy('id');
+        $galleryTotal = (clone $galleryQuery)->count();
+        $galleryImages = $galleryQuery->forPage(1, GalleryController::PER_PAGE)->get();
+        $galleryHasMore = GalleryController::PER_PAGE < $galleryTotal;
+
+        return view('pages.home', compact(
+            'homeServices',
+            'galleryImages',
+            'galleryHasMore'
+        ));
     }
 
     public function solutions(): View
