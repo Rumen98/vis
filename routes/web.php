@@ -4,12 +4,14 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SolutionController;
 use App\Support\BrandCatalog;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(PageController::class)->group(function (): void {
     Route::get('/', 'home')->name('home');
     Route::get('/solutions', 'solutions')->name('solutions');
+    Route::get('/solutions/{solution:slug}', [SolutionController::class, 'show'])->name('solutions.show');
     Route::get('/tehnika', 'tech')->name('tech');
     Route::get('/why-us', 'why')->name('why');
     Route::get('/contact', 'contact')->name('contact');

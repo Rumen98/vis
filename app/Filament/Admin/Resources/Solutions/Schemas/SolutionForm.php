@@ -4,12 +4,13 @@ namespace App\Filament\Admin\Resources\Solutions\Schemas;
 
 use App\Models\Solution;
 use App\Support\Filament\SimpleRepeaterList;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class SolutionForm
 {
@@ -20,7 +21,20 @@ class SolutionForm
                 TextInput::make('title')
                     ->label('Заглавие')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, $get) {
+                        if (! $get('slug')) {
+                            $set('slug', Str::slug((string) $state));
+                        }
+                    }),
+
+                TextInput::make('slug')
+                    ->label('Slug (адрес на подстраницата)')
+                    ->helperText('Пример: sigurnost-za-ofisi → /solutions/sigurnost-za-ofisi')
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true),
 
                 Select::make('solution_type')
                     ->label('Тип решение')
@@ -40,21 +54,16 @@ class SolutionForm
                     ->searchable()
                     ->native(false),
 
-                Placeholder::make('linked_article_info')
-                    ->label('Свързана статия')
-                    ->content(function (?object $record): string {
-                        if (! $record) {
-                            return 'Ще можеш да закачиш статия след като запишеш решението.';
-                        }
-
-                        $record->loadMissing('article');
-
-                        if ($record->article) {
-                            return '1 свързана статия: '.$record->article->title;
-                        }
-
-                        return 'Няма свързана статия.';
-                    })
+                RichEditor::make('body')
+                    ->label('Съдържание на подстраницата')
+                    ->helperText('Текстът за конкретното решение, който се показва на собствената му страница.')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('solutions/content')
+                    ->toolbarButtons([
+                        'bold', 'italic', 'underline', 'strike',
+                        'bulletList', 'orderedList', 'h2', 'h3',
+                        'blockquote', 'link', 'attachFiles', 'redo', 'undo',
+                    ])
                     ->columnSpanFull(),
 
                 Repeater::make('bullets')
@@ -67,8 +76,8 @@ class SolutionForm
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing([SimpleRepeaterList::class, 'dehydrate'])
-                    ->afterStateHydrated([SimpleRepeaterList::class, 'hydrate']),
+                    ->dehydrateStateUsing(fn ($state) => SimpleRepeaterList::dehydrate($state))
+                    ->afterStateHydrated(fn (Repeater $component, $state) => SimpleRepeaterList::hydrate($component, $state)),
 
                 TextInput::make('sort_order')
                     ->label('Ред')

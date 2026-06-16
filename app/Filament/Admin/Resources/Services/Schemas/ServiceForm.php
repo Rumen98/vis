@@ -41,8 +41,8 @@ class ServiceForm
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing([SimpleRepeaterList::class, 'dehydrate'])
-                    ->afterStateHydrated([SimpleRepeaterList::class, 'hydrate']),
+                    ->dehydrateStateUsing(fn ($state) => SimpleRepeaterList::dehydrate($state))
+                    ->afterStateHydrated(fn (Repeater $component, $state) => SimpleRepeaterList::hydrate($component, $state)),
 
                 TextInput::make('sort_order')
                     ->label('Ред')

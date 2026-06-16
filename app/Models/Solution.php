@@ -17,8 +17,10 @@ class Solution extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'solution_type',
         'description',
+        'body',
         'icon',
         'bullets',
         'sort_order',
