@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\GalleryImage;
+use App\Models\ObjectSolution;
 use App\Models\Service;
 use App\Models\Solution;
 use App\Support\BrandCatalog;
@@ -15,6 +16,12 @@ class PageController extends Controller
 {
     public function home(): View
     {
+        $objectSolutions = ObjectSolution::query()
+            ->active()
+            ->ordered()
+            ->with('solution:id,slug,is_active')
+            ->get();
+
         $homeServices = Service::query()
             ->active()
             ->ordered()
@@ -27,6 +34,7 @@ class PageController extends Controller
         $galleryHasMore = GalleryController::PER_PAGE < $galleryTotal;
 
         return view('pages.home', compact(
+            'objectSolutions',
             'homeServices',
             'galleryImages',
             'galleryHasMore'
