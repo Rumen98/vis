@@ -1433,6 +1433,17 @@ h1,h2,h3,h4,.display{overflow-wrap:break-word}
   .hero h1{font-size:clamp(2.2rem,12vw,4.85rem)}
 }
 
+/* The homepage headline has deliberate, editorial line breaks. On phones keep
+   each of those lines intact instead of splitting a Bulgarian word in two. */
+@media(max-width:700px){
+  .hero h1{font-size:clamp(2.1rem,10vw,3.6rem);line-height:.92;letter-spacing:-.025em}
+  .hero h1 .hero-line,.hero h1 .signal-line{white-space:nowrap}
+
+  /* `cover` zoomed the 16:9 hero artwork until the camera was cropped.
+     A smaller, right-aligned image keeps the complete camera in frame. */
+  .hero{background-size:cover,auto 58%;background-position:center,right 42%}
+}
+
 /* Mobile nav panel starts right below utility bar + header
    (30px + 68px, and 30px + 64px under 700px). */
 @media(max-width:1020px){.nav-links{inset:98px 0 auto}}
