@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-eejv-cDT.css",
+    "file": "assets/app-ntM9qQNY.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -8,8 +8,17 @@
       "app.css"
     ]
   },
+  "resources/css/blackgrid.css": {
+    "file": "assets/blackgrid-Cy0n2SjP.css",
+    "src": "resources/css/blackgrid.css",
+    "isEntry": true,
+    "name": "blackgrid",
+    "names": [
+      "blackgrid.css"
+    ]
+  },
   "resources/js/app.js": {
-    "file": "assets/app-DpVkGPrq.js",
+    "file": "assets/app-MQ7TDLoN.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

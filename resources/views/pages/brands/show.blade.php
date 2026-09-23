@@ -3,179 +3,153 @@
 @section('title', $brand['display_name'])
 
 @section('content')
-<section class="bg-white">
-    <div class="mx-auto max-w-6xl px-4 py-14">
-        <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-start">
-            <div>
-                <h1 class="text-3xl md:text-4xl font-extrabold">{{ $brand['display_name'] }}</h1>
+    <section class="page-hero">
+        <div class="container">
+            <nav class="breadcrumbs" aria-label="Навигационна пътека">
+                <a href="{{ route('home') }}">Начало</a>
+                <span>/</span>
+                <a href="{{ route('tech') }}">Техника</a>
+                <span>/</span>
+                <span>{{ $brand['display_name'] }}</span>
+            </nav>
 
-                @if ($brand['document_title'] !== $brand['display_name'])
-                    <p class="mt-3 text-slate-600">{{ $brand['document_title'] }}</p>
-                @endif
+            <div class="eyebrow">Марка</div>
+            <h1>{{ $brand['display_name'] }}</h1>
 
-                @foreach ($brand['introduction_paragraphs'] as $paragraph)
-                    <p class="mt-3 text-slate-600">{{ $paragraph }}</p>
-                @endforeach
+            @if ($brand['document_title'] !== $brand['display_name'])
+                <p>{{ $brand['document_title'] }}</p>
+            @endif
+        </div>
+    </section>
 
-                @if ($brand['introduction_bullets'])
-                    <ul class="mt-6 space-y-3 text-sm text-slate-700">
-                        @foreach ($brand['introduction_bullets'] as $item)
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                                <span>{{ $item }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
+    <section class="section tone-white">
+        <div class="container">
+            <div class="brand-intro">
+                <div class="brand-hero-media">
+                    <div class="brand-intro-logo">
+                        @if ($brand['logo'])
+                            <img
+                                src="{{ asset($brand['logo']['asset_path']) }}"
+                                alt="{{ $brand['logo']['alt'] }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        @else
+                            <span style="font-weight:800;font-size:1.4rem">{{ $brand['display_name'] }}</span>
+                        @endif
+                    </div>
 
-                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <a
-                        href="{{ route('quote') }}"
-                        class="inline-flex items-center justify-center rounded-lg bg-red-600 px-5 py-3 font-semibold text-white hover:bg-red-500"
-                    >
-                        {{ $brand['button_label'] }}
-                    </a>
-                    <a
-                        href="{{ route('tech') }}"
-                        class="inline-flex items-center justify-center rounded-lg border bg-white px-5 py-3 font-semibold text-black"
-                    >
-                        Към техника
-                    </a>
-                </div>
-            </div>
-
-            <div class="rounded-xl border bg-white p-4 md:p-6">
-                <div class="flex h-20 items-center justify-center overflow-hidden sm:h-24">
-                    @if ($brand['logo'])
-                        <img
-                            src="{{ asset($brand['logo']['asset_path']) }}"
-                            alt="{{ $brand['logo']['alt'] }}"
-                            class="h-full w-full object-cover object-center"
-                            loading="lazy"
-                        >
-                    @else
-                        <span class="text-sm font-semibold text-slate-900">{{ $brand['display_name'] }}</span>
+                    @if ($brand['hero_image'])
+                        <div class="brand-shot">
+                            <img
+                                src="{{ asset($brand['hero_image']['asset_path']) }}"
+                                alt="{{ $brand['hero_image']['alt'] }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        </div>
                     @endif
                 </div>
 
-                @if ($brand['hero_image'])
-                    <div class="mt-4 overflow-hidden rounded-xl border bg-white">
-                        <img
-                            src="{{ asset($brand['hero_image']['asset_path']) }}"
-                            alt="{{ $brand['hero_image']['alt'] }}"
-                            class="block h-auto w-full object-contain"
-                            loading="lazy"
-                        >
+                <div>
+                    <div class="eyebrow">За марката</div>
+
+                    <h2 style="margin:14px 0 22px">{{ $brand['display_name'] }}</h2>
+
+                    @foreach ($brand['introduction_paragraphs'] as $paragraph)
+                        <p class="lead">{{ $paragraph }}</p>
+                    @endforeach
+
+                    @if ($brand['introduction_bullets'])
+                        <ul class="brand-section-list">
+                            @foreach ($brand['introduction_bullets'] as $item)
+                                <li>{{ $item }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px">
+                        <a class="btn primary" href="{{ route('quote') }}">{{ $brand['button_label'] }}</a>
+                        <a class="btn outline" href="{{ route('tech') }}">Към техника</a>
                     </div>
-                @endif
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-@foreach ($brand['sections'] as $index => $section)
-    <section class="bg-white">
-        <div class="mx-auto max-w-6xl px-4 py-14">
-            <div class="max-w-3xl">
-                <h2 class="text-2xl md:text-3xl font-extrabold">{{ $section['title'] }}</h2>
+    @foreach ($brand['sections'] as $index => $section)
+        <section @class(['section', 'tone-soft' => $index % 2 === 0, 'tone-white' => $index % 2 !== 0])>
+            <div class="container">
+                <div class="section-head">
+                    <div class="copy">
+                        <div class="eyebrow">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }} / {{ $brand['display_name'] }}</div>
+                        <h2>{{ $section['title'] }}</h2>
+                    </div>
+                </div>
 
                 @foreach ($section['paragraphs'] as $paragraph)
-                    <p class="mt-3 text-slate-600">{{ $paragraph }}</p>
+                    <p class="lead" style="max-width:820px">{{ $paragraph }}</p>
                 @endforeach
-            </div>
 
-            @if ($section['bullets'])
-                <div class="mt-8 rounded-xl border bg-white p-4 md:p-6">
-                    <ul class="{{ count($section['bullets']) > 4 ? 'grid gap-3 md:grid-cols-2 text-sm text-slate-700' : 'space-y-3 text-sm text-slate-700' }}">
+                @if ($section['bullets'])
+                    <ul class="brand-section-list">
                         @foreach ($section['bullets'] as $item)
-                            <li class="flex items-start gap-2">
-                                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                                <span>{{ $item }}</span>
-                            </li>
+                            <li>{{ $item }}</li>
                         @endforeach
                     </ul>
-                </div>
-            @endif
+                @endif
+            </div>
+        </section>
+    @endforeach
 
-            @if ($section['subsections'])
-                <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    @foreach ($section['subsections'] as $subsection)
-                        <div class="rounded-xl border bg-white p-4 md:p-6">
-                            <h3 class="text-lg font-bold">{{ $subsection['title'] }}</h3>
-
-                            @foreach ($subsection['paragraphs'] as $paragraph)
-                                <p class="mt-3 text-slate-600">{{ $paragraph }}</p>
-                            @endforeach
-
-                            @if ($subsection['bullets'])
-                                <ul class="mt-4 space-y-3 text-sm text-slate-700">
-                                    @foreach ($subsection['bullets'] as $item)
-                                        <li class="flex items-start gap-2">
-                                            <span class="mt-1 h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                                            <span>{{ $item }}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
+    @if ($brand['trailing_images'])
+        <section class="section tone-white">
+            <div class="container">
+                <div class="brand-products">
+                    @foreach ($brand['trailing_images'] as $image)
+                        <div class="brand-shot">
+                            <img
+                                src="{{ asset($image['asset_path']) }}"
+                                alt="{{ $image['alt'] }}"
+                                loading="lazy"
+                                decoding="async"
+                            >
                         </div>
                     @endforeach
                 </div>
-            @endif
+            </div>
+        </section>
+    @endif
 
-            @php($sectionImage = $brand['section_images'][$index] ?? null)
-
-            @if ($sectionImage)
-                <div class="mt-8 overflow-hidden rounded-xl border bg-white">
-                    <img
-                        src="{{ asset($sectionImage['asset_path']) }}"
-                        alt="{{ $sectionImage['alt'] }}"
-                        class="block h-auto w-full object-contain"
-                        loading="lazy"
-                    >
-                </div>
-            @endif
-        </div>
-    </section>
-@endforeach
-
-@if ($brand['trailing_images'])
-    <section class="bg-white">
-        <div class="mx-auto max-w-6xl px-4 py-14">
-            <h2 class="text-2xl md:text-3xl font-extrabold">Изображения</h2>
-
-            <div @class([
-                'mt-8',
-                'max-w-4xl' => count($brand['trailing_images']) === 1,
-                'grid gap-6 md:grid-cols-2' => count($brand['trailing_images']) > 1,
-            ])>
-                @foreach ($brand['trailing_images'] as $image)
-                    <div class="overflow-hidden rounded-xl border bg-white">
-                        <img
-                            src="{{ asset($image['asset_path']) }}"
-                            alt="{{ $image['alt'] }}"
-                            class="block h-auto w-full object-contain"
-                            loading="lazy"
-                        >
+    @if ($otherBrands->isNotEmpty())
+        <section class="section tone-soft">
+            <div class="container">
+                <div class="section-head">
+                    <div class="copy">
+                        <div class="eyebrow">Още марки</div>
+                        <h2>Други марки.</h2>
                     </div>
-                @endforeach
+
+                    <a class="btn outline" href="{{ route('tech') }}">Цялата техника →</a>
+                </div>
+
+                <div class="brand-grid">
+                    @foreach ($otherBrands as $otherBrand)
+                        <x-brand-card :brand="$otherBrand" />
+                    @endforeach
+                </div>
             </div>
+        </section>
+    @endif
+
+    <section class="cta-band">
+        <div class="container">
+            <div>
+                <div class="eyebrow">Имате предпочитана марка?</div>
+                <h2>Ще проверим дали е правилният избор.</h2>
+            </div>
+
+            <a class="btn dark" href="{{ route('quote') }}">Запитване →</a>
         </div>
     </section>
-@endif
-
-@if ($otherBrands->isNotEmpty())
-    <section class="bg-white">
-        <div class="mx-auto max-w-6xl px-4 py-14">
-            <div class="max-w-3xl">
-                <h2 class="text-2xl md:text-3xl font-extrabold">Други марки</h2>
-            </div>
-
-            <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                @foreach ($otherBrands as $otherBrand)
-                    <x-brand-card :brand="$otherBrand" />
-                @endforeach
-            </div>
-        </div>
-    </section>
-@endif
 @endsection

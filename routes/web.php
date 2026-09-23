@@ -25,6 +25,7 @@ Route::controller(PageController::class)->group(function (): void {
 });
 
 Route::get('/services', [ServicesController::class, 'index'])->name('services');
+Route::get('/services/{service:slug}', [ServicesController::class, 'show'])->name('services.show');
 Route::get('/gallery/load', [GalleryController::class, 'load'])->name('gallery.load');
 Route::redirect('/tech', '/tehnika', 301);
 

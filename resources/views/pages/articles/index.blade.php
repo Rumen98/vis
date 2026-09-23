@@ -3,31 +3,54 @@
 @section('title', 'Статии')
 
 @section('content')
-<section class="bg-slate-50">
-    <div class="mx-auto max-w-6xl px-4 py-14">
-        <h1 class="text-3xl md:text-4xl font-extrabold">Статии</h1>
-        <p class="mt-3 max-w-2xl text-slate-600">
-            Полезни материали и кратки насоки.
-        </p>
+    <section class="page-hero">
+        <div class="container">
+            <div class="eyebrow">Статии</div>
+            <h1>Практични материали от работата.</h1>
+            <p>Полезни материали и кратки насоки.</p>
+        </div>
+    </section>
 
-        <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            @forelse($articles as $article)
-                <a href="{{ route('articles.show', $article->slug) }}"
-                   class="rounded-xl border bg-white p-6 hover:shadow-sm transition">
-                    <h2 class="text-lg font-bold">{{ $article->title }}</h2>
+    <section class="section tone-white">
+        <div class="container">
+            @forelse ($articles as $article)
+                @if ($loop->first)
+                    <div class="article-grid">
+                @endif
 
-                    @if($article->excerpt)
-                        <p class="mt-2 text-sm text-slate-600">{{ $article->excerpt }}</p>
-                    @endif
+                <a class="article-card" href="{{ route('articles.show', $article->slug) }}">
+                    <div>
+                        <span class="tag">Статия</span>
+                        <h3>{{ $article->title }}</h3>
 
-                    <div class="mt-4 text-sm font-semibold text-red-600">Прочети →</div>
+                        @if ($article->excerpt)
+                            <p>{{ $article->excerpt }}</p>
+                        @endif
+                    </div>
+
+                    <div class="card-foot">
+                        <span>Прочети</span>
+                        <span class="arrow">→</span>
+                    </div>
                 </a>
+
+                @if ($loop->last)
+                    </div>
+                @endif
             @empty
-                <div class="rounded-xl border bg-white p-6 text-slate-700">
-                    Няма публикувани статии.
-                </div>
+                <div class="empty-note">Няма публикувани статии.</div>
             @endforelse
         </div>
-    </div>
-</section>
+    </section>
+
+    <section class="cta-band">
+        <div class="container">
+            <div>
+                <div class="eyebrow">Имате въпрос за вашия обект?</div>
+                <h2>Ще отговорим конкретно.</h2>
+            </div>
+
+            <a class="btn dark" href="{{ route('contact') }}">Свържи се с нас →</a>
+        </div>
+    </section>
 @endsection

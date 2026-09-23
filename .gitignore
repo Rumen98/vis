@@ -21,3 +21,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Видео клипове за преглед (големи файлове, не влизат в репото)
+/preview

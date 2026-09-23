@@ -3,190 +3,121 @@
 @section('title', 'Решения и статии')
 
 @section('content')
-<section class="bg-white">
-    <div class="mx-auto max-w-6xl px-4 py-14">
-        <div class="max-w-3xl">
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-                Решения и статии
-            </h1>
-        </div>
+    <section class="page-hero">
+        <div class="container">
+            <div class="eyebrow">Решения</div>
+            <h1>Правилната система за конкретния обект.</h1>
+            <p>
+                Дом, офис, магазин, ресторант, паркинг или жилищна сграда – различният риск изисква
+                различна комбинация от технологии.
+            </p>
 
-        <div class="mt-10 rounded-2xl border border-slate-200 bg-white p-2">
-            <div class="flex flex-wrap gap-2">
-                <button type="button" data-main-tab="solutions"
-                    class="main-tab-btn rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm">
-                    Решения
-                </button>
-
-                <button type="button" data-main-tab="articles"
-                    class="main-tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white hover:text-slate-900">
-                    Статии
-                </button>
+            <div class="hero-actions">
+                <a class="btn primary" href="#business">Бизнес решения</a>
+                <a class="btn ghost" href="#smb">Решения за дома</a>
+                <a class="btn ghost" href="#articles">Статии</a>
             </div>
         </div>
+    </section>
 
-        <div class="mt-6">
-            <div id="main-tab-solutions" class="main-tab-panel">
-                <div class="rounded-2xl border border-slate-200 bg-white p-2">
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" data-solution-tab="business"
-                            class="solution-tab-btn rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-sm">
-                            Бизнес решения
-                        </button>
-
-                        <button type="button" data-solution-tab="smb"
-                            class="solution-tab-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white hover:text-slate-900">
-                            Решения за дома
-                        </button>
-                    </div>
+    <section class="section tone-white" id="business">
+        <div class="container">
+            <div class="section-head">
+                <div class="copy">
+                    <div class="eyebrow">За бизнеса</div>
+                    <h2>Контрол, когато обектът работи.</h2>
                 </div>
 
-                <div class="mt-6">
-                    {{-- BUSINESS --}}
-                    <div id="solution-tab-business" class="solution-tab-panel">
-                        @if ($businessSolutions->count())
-                            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                                @foreach ($businessSolutions as $solution)
-                                    <x-solution-card :solution="$solution" />
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                                <p class="text-sm text-slate-600">Няма добавени бизнес решения още.</p>
-                            </div>
-                        @endif
-                    </div>
+                <p class="lead">
+                    Комбинираме видеонаблюдение, охрана, достъп и мрежа според процесите в конкретния бизнес.
+                </p>
+            </div>
 
-                    {{-- SMB --}}
-                    <div id="solution-tab-smb" class="solution-tab-panel hidden">
-                        @if ($smbSolutions->count())
-                            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                                @foreach ($smbSolutions as $solution)
-                                    <x-solution-card :solution="$solution" />
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                                <p class="text-sm text-slate-600">Няма добавени решения за дома още.</p>
-                            </div>
-                        @endif
-                    </div>
+            @if ($businessSolutions->count())
+                <div class="grid grid-3">
+                    @foreach ($businessSolutions as $solution)
+                        <x-solution-card :solution="$solution" :index="$loop->iteration" />
+                    @endforeach
                 </div>
-            </div>
-
-            <div id="main-tab-articles" class="main-tab-panel hidden">
-                @if ($articles->count())
-                    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        @foreach ($articles as $article)
-                            <a href="{{ route('articles.show', $article->slug) }}"
-                               class="block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                                @if (!empty($article->featured_image))
-                                    <img
-                                        src="{{ asset('storage/' . $article->featured_image) }}"
-                                        alt="{{ $article->title }}"
-                                        class="mb-4 w-full rounded-xl border border-slate-200 object-cover"
-                                        style="aspect-ratio: 16/9;"
-                                        loading="lazy"
-                                    >
-                                @endif
-
-                                <div class="mb-3">
-                                    @if ($article->solution)
-                                        <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                                            Към решение: {{ $article->solution->title }}
-                                        </span>
-                                    @else
-                                        <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                                            Обща статия
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <h3 class="text-lg font-bold leading-tight text-slate-900">
-                                    {{ $article->title }}
-                                </h3>
-
-                                @if (!empty($article->excerpt))
-                                    <p class="mt-2 text-sm leading-6 text-slate-600">
-                                        {{ $article->excerpt }}
-                                    </p>
-                                @endif
-
-                                <div class="mt-4 text-sm font-semibold text-red-600">
-                                    Прочети →
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                @else
-                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                        <p class="text-sm text-slate-600">Няма добавени статии още.</p>
-                    </div>
-                @endif
-            </div>
+            @else
+                <div class="empty-note">Няма добавени бизнес решения още.</div>
+            @endif
         </div>
-    </div>
-</section>
+    </section>
 
-<script nonce="{{ Vite::cspNonce() }}">
-    (function () {
-        const mainButtons = document.querySelectorAll('.main-tab-btn');
-        const mainPanels = document.querySelectorAll('.main-tab-panel');
+    <section class="section tone-soft" id="smb">
+        <div class="container">
+            <div class="section-head">
+                <div class="copy">
+                    <div class="eyebrow">За дома</div>
+                    <h2>Спокойствие, когато не сте там.</h2>
+                </div>
 
-        const solutionButtons = document.querySelectorAll('.solution-tab-btn');
-        const solutionPanels = document.querySelectorAll('.solution-tab-panel');
+                <p class="lead">
+                    Къщи, вили и жилищни сгради с видеонаблюдение, аларма, периметрова защита и контрол на входовете.
+                </p>
+            </div>
 
-        function setMainTab(tabName) {
-            mainPanels.forEach(panel => panel.classList.add('hidden'));
-            const activePanel = document.getElementById('main-tab-' + tabName);
-            if (activePanel) activePanel.classList.remove('hidden');
+            @if ($smbSolutions->count())
+                <div class="grid grid-3">
+                    @foreach ($smbSolutions as $solution)
+                        <x-solution-card :solution="$solution" :index="$loop->iteration" />
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-note">Няма добавени решения за дома още.</div>
+            @endif
+        </div>
+    </section>
 
-            mainButtons.forEach(btn => {
-                const active = btn.getAttribute('data-main-tab') === tabName;
+    <section class="section tone-white" id="articles">
+        <div class="container">
+            <div class="section-head">
+                <div class="copy">
+                    <div class="eyebrow">Статии</div>
+                    <h2>Практични материали от работата.</h2>
+                </div>
 
-                btn.classList.toggle('bg-white', active);
-                btn.classList.toggle('shadow-sm', active);
-                btn.classList.toggle('text-slate-900', active);
-                btn.classList.toggle('text-slate-700', !active);
-            });
-        }
+                <a class="btn outline" href="{{ route('articles.index') }}">Всички статии →</a>
+            </div>
 
-        function setSolutionTab(tabName) {
-            solutionPanels.forEach(panel => panel.classList.add('hidden'));
-            const activePanel = document.getElementById('solution-tab-' + tabName);
-            if (activePanel) activePanel.classList.remove('hidden');
+            @if ($articles->count())
+                <div class="article-grid">
+                    @foreach ($articles as $article)
+                        <a class="article-card" href="{{ route('articles.show', $article->slug) }}">
+                            <div>
+                                <span class="tag">
+                                    {{ $article->solution ? 'Към решение: ' . $article->solution->title : 'Обща статия' }}
+                                </span>
 
-            solutionButtons.forEach(btn => {
-                const active = btn.getAttribute('data-solution-tab') === tabName;
+                                <h3>{{ $article->title }}</h3>
 
-                btn.classList.toggle('bg-white', active);
-                btn.classList.toggle('shadow-sm', active);
-                btn.classList.toggle('text-slate-900', active);
-                btn.classList.toggle('text-slate-700', !active);
-            });
-        }
+                                @if (! empty($article->excerpt))
+                                    <p>{{ $article->excerpt }}</p>
+                                @endif
+                            </div>
 
-        mainButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setMainTab(btn.getAttribute('data-main-tab'));
-            });
-        });
+                            <div class="card-foot">
+                                <span>Прочети</span>
+                                <span class="arrow">→</span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            @else
+                <div class="empty-note">Няма добавени статии още.</div>
+            @endif
+        </div>
+    </section>
 
-        solutionButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setSolutionTab(btn.getAttribute('data-solution-tab'));
-            });
-        });
+    <section class="cta-band">
+        <div class="container">
+            <div>
+                <div class="eyebrow">Не виждате вашия тип обект?</div>
+                <h2>Опишете го. Ще изградим решението.</h2>
+            </div>
 
-        const hash = window.location.hash.replace('#', '');
-
-        if (hash === 'articles') {
-            setMainTab('articles');
-        } else {
-            setMainTab('solutions');
-        }
-
-        setSolutionTab('business');
-    })();
-</script>
+            <a class="btn dark" href="{{ route('quote') }}">Запитване →</a>
+        </div>
+    </section>
 @endsection

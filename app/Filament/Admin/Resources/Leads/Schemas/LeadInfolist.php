@@ -3,6 +3,8 @@
 namespace App\Filament\Admin\Resources\Leads\Schemas;
 
 use App\Enums\LeadStatus;
+use App\Models\Lead;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -19,7 +21,20 @@ class LeadInfolist
                     ->placeholder('-'),
                 TextEntry::make('object_type')
                     ->label('Тип обект')
+                    ->formatStateUsing(fn (?string $state): string => Lead::OBJECT_TYPES[$state] ?? (string) $state)
                     ->placeholder('-'),
+                TextEntry::make('service')
+                    ->label('Услуга')
+                    ->placeholder('-'),
+                TextEntry::make('area')
+                    ->label('Район / адрес')
+                    ->placeholder('-'),
+                TextEntry::make('timing')
+                    ->label('Предпочитан срок')
+                    ->placeholder('-'),
+                IconEntry::make('consent')
+                    ->label('Съгласие за контакт')
+                    ->boolean(),
                 TextEntry::make('message')
                     ->label('Съобщение')
                     ->placeholder('-')

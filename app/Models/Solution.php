@@ -6,6 +6,7 @@ use App\Models\Concerns\HasActiveAndSortScopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Solution extends Model
 {
@@ -20,17 +21,35 @@ class Solution extends Model
         'slug',
         'solution_type',
         'description',
+        'intro_heading',
+        'intro_text',
+        'featured_image',
         'body',
         'icon',
         'bullets',
+        'problems',
         'sort_order',
         'is_active',
     ];
 
     protected $casts = [
         'bullets' => 'array',
+        'problems' => 'array',
         'is_active' => 'boolean',
     ];
+
+    protected static function booted(): void
+    {
+        static::updating(function (self $solution): void {
+            if ($solution->isDirty('featured_image') && $solution->getOriginal('featured_image')) {
+                Storage::disk('public')->delete($solution->getOriginal('featured_image'));
+            }
+        });
+
+        static::deleting(function (self $solution): void {
+            if ($solution->featured_image) Storage::disk('public')->delete($solution->featured_image);
+        });
+    }
 
     public function article(): HasOne
     {

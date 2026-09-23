@@ -3,8 +3,8 @@
 namespace App\Filament\Admin\Resources\Solutions\Schemas;
 
 use App\Models\Solution;
-use App\Support\Filament\SimpleRepeaterList;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -48,6 +48,33 @@ class SolutionForm
                     ->rows(4)
                     ->columnSpanFull(),
 
+                FileUpload::make('featured_image')
+                    ->label('Снимка за черната лента зад заглавието')
+                    ->disk('public')
+                    ->directory('solutions')
+                    ->image()
+                    ->imageEditor()
+                    ->columnSpanFull(),
+
+                TextInput::make('intro_heading')
+                    ->label('Заглавие на секцията с проблеми')
+                    ->maxLength(255),
+
+                Textarea::make('intro_text')
+                    ->label('Въвеждащ текст за проблемите')
+                    ->rows(4)
+                    ->columnSpanFull(),
+
+                Repeater::make('problems')
+                    ->label('Проблеми, които решението адресира')
+                    ->schema([
+                        TextInput::make('title')->label('Заглавие')->required(),
+                        Textarea::make('text')->label('Описание')->required(),
+                    ])
+                    ->defaultItems(0)
+                    ->reorderable()
+                    ->columnSpanFull(),
+
                 Select::make('icon')
                     ->label('Икона')
                     ->options(self::iconOptions())
@@ -69,15 +96,17 @@ class SolutionForm
                 Repeater::make('bullets')
                     ->label('Точки (булети)')
                     ->schema([
-                        TextInput::make('value')
-                            ->label('Текст')
+                        TextInput::make('title')
+                            ->label('Заглавие')
+                            ->required(),
+                        Textarea::make('text')
+                            ->label('Описание')
                             ->required(),
                     ])
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing(fn ($state) => SimpleRepeaterList::dehydrate($state))
-                    ->afterStateHydrated(fn (Repeater $component, $state) => SimpleRepeaterList::hydrate($component, $state)),
+                    ->dehydrateStateUsing(fn ($state) => array_values($state ?? [])),
 
                 TextInput::make('sort_order')
                     ->label('Ред')

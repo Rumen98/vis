@@ -22,10 +22,12 @@ class PageController extends Controller
             ->with('solution:id,slug,is_active')
             ->get();
 
+        // Гридът на началната страница в новия дизайн е за 6 услуги
+        // (първата и последната карта са широки по 2 колони).
         $homeServices = Service::query()
             ->active()
             ->ordered()
-            ->take(4)
+            ->take(6)
             ->get();
 
         $galleryQuery = GalleryImage::query()->active()->ordered()->orderBy('id');

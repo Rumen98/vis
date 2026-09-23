@@ -49,6 +49,8 @@ class SolutionSubpageTest extends TestCase
         $this->actingAs($user)
             ->get('/admin/solutions/'.$s->getKey().'/edit')
             ->assertOk()
-            ->assertSee('Съдържание на подстраницата');
+            ->assertSee('Съдържание на подстраницата')
+            ->assertSee('Снимка за черната лента зад заглавието')
+            ->assertSee('Проблеми, които решението адресира');
     }
 }

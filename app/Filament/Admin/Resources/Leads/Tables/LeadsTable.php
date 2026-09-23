@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\Leads\Tables;
 
 use App\Enums\LeadStatus;
+use App\Models\Lead;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -29,6 +30,29 @@ class LeadsTable
                 TextColumn::make('email')
                     ->label('Имейл')
                     ->searchable(),
+
+                TextColumn::make('object_type')
+                    ->label('Тип обект')
+                    ->formatStateUsing(fn (?string $state): string => Lead::OBJECT_TYPES[$state] ?? (string) $state)
+                    ->placeholder('-')
+                    ->toggleable(),
+
+                TextColumn::make('service')
+                    ->label('Услуга')
+                    ->placeholder('-')
+                    ->toggleable()
+                    ->searchable(),
+
+                TextColumn::make('area')
+                    ->label('Район')
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+
+                TextColumn::make('timing')
+                    ->label('Срок')
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('source')
                     ->label('Източник')
@@ -64,6 +88,14 @@ class LeadsTable
                 SelectFilter::make('status')
                     ->label('Статус')
                     ->options(LeadStatus::options()),
+
+                SelectFilter::make('service')
+                    ->label('Услуга')
+                    ->options(Lead::serviceOptions()),
+
+                SelectFilter::make('object_type')
+                    ->label('Тип обект')
+                    ->options(Lead::objectTypeOptions()),
             ])
             ->recordActions([
                 ViewAction::make()->label('Преглед'),

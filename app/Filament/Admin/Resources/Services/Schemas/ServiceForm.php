@@ -2,12 +2,14 @@
 
 namespace App\Filament\Admin\Resources\Services\Schemas;
 
-use App\Support\Filament\SimpleRepeaterList;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ServiceForm
 {
@@ -18,11 +20,45 @@ class ServiceForm
                 TextInput::make('title')
                     ->label('Заглавие')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function ($state, callable $set, $get) {
+                        if (! $get('slug')) $set('slug', Str::slug((string) $state));
+                    }),
+
+                TextInput::make('slug')
+                    ->label('Slug (адрес на подстраницата)')
+                    ->required()
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true),
 
                 Textarea::make('description')
                     ->label('Описание')
                     ->rows(4)
+                    ->columnSpanFull(),
+
+                FileUpload::make('featured_image')
+                    ->label('Снимка за черната лента зад заглавието')
+                    ->disk('public')
+                    ->directory('services')
+                    ->image()
+                    ->imageEditor()
+                    ->columnSpanFull(),
+
+                TextInput::make('intro_heading')
+                    ->label('Заглавие на информационната секция')
+                    ->maxLength(255),
+
+                Textarea::make('intro_text')
+                    ->label('Текст на информационната секция')
+                    ->rows(4)
+                    ->columnSpanFull(),
+
+                RichEditor::make('body')
+                    ->label('Съдържание на подстраницата')
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('services/content')
+                    ->toolbarButtons(['bold', 'italic', 'underline', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'link', 'attachFiles', 'redo', 'undo'])
                     ->columnSpanFull(),
 
                 Select::make('icon')
@@ -34,15 +70,17 @@ class ServiceForm
                 Repeater::make('bullets')
                     ->label('Точки (булети)')
                     ->schema([
-                        TextInput::make('value')
-                            ->label('Текст')
+                        TextInput::make('title')
+                            ->label('Заглавие')
+                            ->required(),
+                        Textarea::make('text')
+                            ->label('Описание')
                             ->required(),
                     ])
                     ->defaultItems(0)
                     ->reorderable()
                     ->columnSpanFull()
-                    ->dehydrateStateUsing(fn ($state) => SimpleRepeaterList::dehydrate($state))
-                    ->afterStateHydrated(fn (Repeater $component, $state) => SimpleRepeaterList::hydrate($component, $state)),
+                    ->dehydrateStateUsing(fn ($state) => array_values($state ?? [])),
 
                 TextInput::make('sort_order')
                     ->label('Ред')

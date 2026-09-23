@@ -7,9 +7,9 @@
     'duration' => 1400,
 ])
 
-<div class="rounded-lg border border-slate-200 bg-white p-6 shadow-sm shadow-slate-100/80">
+<div class="stat-cell">
     <div
-        class="text-3xl font-extrabold tracking-[-0.03em] text-slate-950"
+        class="stat-value"
         data-countup
         data-target="{{ $target }}"
         data-suffix="{{ $suffix }}"
@@ -20,5 +20,5 @@
         {{ $prefix }}{{ number_format((float) $target, (int) $decimals, '.', '') }}{{ $suffix }}
     </div>
 
-    <div class="mt-1 text-sm text-slate-600">{{ $label }}</div>
+    <div class="stat-label">{{ $label }}</div>
 </div>

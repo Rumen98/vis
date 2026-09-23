@@ -39,11 +39,11 @@ class GalleryTest extends TestCase
 
         $page1 = $this->getJson('/gallery/load?page=1');
         $page1->assertOk()->assertJson(['hasMore' => true]);
-        $this->assertEquals(8, substr_count($page1->json('html'), '<figure'));
+        $this->assertEquals(8, substr_count($page1->json('html'), 'class="gallery-item"'));
 
         $page2 = $this->getJson('/gallery/load?page=2');
         $page2->assertOk()->assertJson(['hasMore' => false]);
-        $this->assertEquals(4, substr_count($page2->json('html'), '<figure'));
+        $this->assertEquals(4, substr_count($page2->json('html'), 'class="gallery-item"'));
     }
 
     public function test_admin_gallery_page_renders(): void

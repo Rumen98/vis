@@ -1,39 +1,27 @@
 @props([
     'solution',
+    'index' => null,
 ])
 
-<a
-    href="{{ route('solutions.show', $solution->slug) }}"
-    class="block rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
->
-    <div class="flex h-full flex-col">
-        <div class="flex items-start gap-4">
-            @if (! empty($solution->icon))
-                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-slate-800 bg-slate-900">
-                    <img
-                        src="{{ asset('icons/' . $solution->icon) }}"
-                        class="h-6 w-6 object-contain"
-                        alt="{{ $solution->title }}"
-                        loading="lazy"
-                    >
-                </div>
-            @endif
+<a class="list-card" href="{{ route('solutions.show', $solution->slug) }}">
+    <div>
+        <span class="tag">{{ $index !== null ? str_pad($index, 2, '0', STR_PAD_LEFT) . ' / ' : '' }}Решение</span>
 
-            <div class="min-w-0 flex-1">
-                <h3 class="text-base font-bold leading-tight text-slate-900 md:text-lg">
-                    {{ $solution->title }}
-                </h3>
+        @if (! empty($solution->icon))
+            <span class="card-icon" aria-hidden="true">
+                <img src="{{ asset('icons/' . $solution->icon) }}" alt="" loading="lazy">
+            </span>
+        @endif
 
-                @if ($solution->description)
-                    <p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
-                        {{ $solution->description }}
-                    </p>
-                @endif
-            </div>
-        </div>
+        <h3>{{ $solution->title }}</h3>
 
-        <div class="mt-auto pt-6 text-sm font-semibold text-red-600">
-            Виж решението →
-        </div>
+        @if ($solution->description)
+            <p>{{ $solution->description }}</p>
+        @endif
+    </div>
+
+    <div class="card-foot">
+        <span>Виж решението</span>
+        <span class="arrow">→</span>
     </div>
 </a>
