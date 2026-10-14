@@ -16,6 +16,14 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response
+            ->assertOk()
+            ->assertSee('<title>Видеонаблюдение София | Монтаж на камери | ВиС</title>', false)
+            ->assertSee(
+                '<meta name="description" content="Монтаж на видеонаблюдение в София за домове и бизнес. Оглед, ясна оферта, чист монтаж и настройка. Вижте реални обекти на ВиС.">',
+                false,
+            );
+
+        $this->assertSame(1, substr_count($response->getContent(), '<meta name="description"'));
     }
 }

@@ -8,15 +8,21 @@
     @php
         $pageTitle = trim($__env->yieldContent('title'));
         $siteTitle = 'ВиС - Видеонаблюдение и сигурност';
-        $fullTitle =
-            $pageTitle && mb_strtolower($pageTitle) !== 'начало' ? $pageTitle . ' | ' . $siteTitle : $siteTitle;
+        $isHomePage = $pageTitle && mb_strtolower($pageTitle) === 'начало';
+        $fullTitle = $isHomePage
+            ? 'Видеонаблюдение София | Монтаж на камери | ВиС'
+            : ($pageTitle ? $pageTitle . ' | ' . $siteTitle : $siteTitle);
+        $defaultDescription =
+            'Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи, паркинг решения. Проектиране, монтаж и поддръжка.';
+        $metaDescription = $isHomePage
+            ? 'Монтаж на видеонаблюдение в София за домове и бизнес. Оглед, ясна оферта, чист монтаж и настройка. Вижте реални обекти на ВиС.'
+            : (trim($__env->yieldContent('meta-description')) ?: $defaultDescription);
 
         $bodyClass = trim($__env->yieldContent('body-class')) ?: 'inner-page';
     @endphp
 
     <title>{{ $fullTitle }}</title>
-    <meta name="description"
-        content="Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи, паркинг решения. Проектиране, монтаж и поддръжка.">
+    <meta name="description" content="{{ $metaDescription }}">
     <link rel="canonical" href="https://viscctv.com">
     <meta name="theme-color" content="#0a0b0c">
 

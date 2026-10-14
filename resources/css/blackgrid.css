@@ -1393,14 +1393,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .list-card .card-foot .btn{min-height:46px}
 
 /* -------------------------------------------------------------
-   Narrow screens: long Bulgarian words (ВИДЕОНАБЛЮДЕНИЕ,
-   СТРУКТУРНО ОКАБЕЛЯВАНЕ …) are set in a condensed display face
-   at ~40px+.  The V2 pass turned word breaking off globally, so
-   those headings pushed grid items past the viewport.  Allow a
-   break only when the word genuinely does not fit, and let every
-   grid child shrink below its min-content width.
+   Bulgarian display headings should wrap between words only. The former
+   `break-word` rule could split "Видеонаблюдение" in the middle.
    ------------------------------------------------------------- */
-h1,h2,h3,h4,.display{overflow-wrap:break-word}
+h1,h2,h3,h4,.display{word-break:normal;overflow-wrap:normal;hyphens:none}
 
 .service-plain-grid>*,
 .service-photo-grid>*,
@@ -1422,7 +1418,16 @@ h1,h2,h3,h4,.display{overflow-wrap:break-word}
 .article-card h3,
 .brand-card h3,
 .related-card h3,
-.service-card h3{min-width:0;overflow-wrap:break-word}
+.service-card h3{min-width:0;word-break:normal;overflow-wrap:normal;hyphens:none}
+
+/* Detail and listing titles use a smaller mobile ceiling so the longest
+   service word fits on 320px screens without clipping or breaking apart. */
+@media(max-width:700px){
+  .detail-hero h1{font-size:clamp(2rem,9vw,3.7rem)}
+  .detail-copy h2,.problem-copy h2{font-size:clamp(2rem,8.8vw,3.2rem)}
+  .list-card h3{font-size:clamp(1.8rem,8.5vw,2.25rem)}
+  .service-plain-card h3{font-size:clamp(1.85rem,9vw,3.5rem)}
+}
 
 /* The longest hero word ("ВИДЕОНАБЛЮДЕНИЕ,") sets the ceiling for the
    mobile headline size — scale to it so the line never breaks mid-word. */
