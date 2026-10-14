@@ -199,7 +199,7 @@
                         >
                             <span class="service-code">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }} / Услуга</span>
 
-                            <h3>{{ $service->title }}</h3>
+                            <h3><x-heading-text :text="$service->title" /></h3>
 
                             @if (! empty($service->description))
                                 <p>{{ $service->description }}</p>

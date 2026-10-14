@@ -28,7 +28,7 @@
                                 </span>
                             @endif
 
-                            <h3>{{ $service->title }}</h3>
+                            <h3><x-heading-text :text="$service->title" /></h3>
 
                             @if (! empty($service->description))
                                 <p>{!! nl2br(e($service->description)) !!}</p>

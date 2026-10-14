@@ -84,7 +84,7 @@ TEXT
         $response->assertDontSee('Ajax е иновативна марка за сигурност и автоматизация.');
         $response->assertDontSee('ajaxcameras.jpg', false);
         $response->assertDontSee('bg-slate-50', false);
-        $response->assertSee('<title>Техника | ВиС - Видеонаблюдение и сигурност</title>', false);
+        $response->assertSee('<title>Техника | Видеонаблюдение София | Монтаж на камери | ВиС</title>', false);
         $response->assertSee('/ajax', false);
         $response->assertSee('/hikvision', false);
     }
@@ -99,7 +99,7 @@ TEXT
         $response->assertSee('Надеждни безжични решения');
         $response->assertSee('ajaxcameras.jpg', false);
         $response->assertDontSee('bg-slate-50', false);
-        $response->assertSee('<title>Ajax | ВиС - Видеонаблюдение и сигурност</title>', false);
+        $response->assertSee('<title>Ajax | Видеонаблюдение София | Монтаж на камери | ВиС</title>', false);
     }
 
     public function test_legacy_brand_url_redirects_to_canonical_slug(): void

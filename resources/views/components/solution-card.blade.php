@@ -13,7 +13,7 @@
             </span>
         @endif
 
-        <h3>{{ $solution->title }}</h3>
+        <h3><x-heading-text :text="$solution->title" /></h3>
 
         @if ($solution->description)
             <p>{{ $solution->description }}</p>

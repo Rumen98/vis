@@ -13,7 +13,7 @@
                 <span>{{ $service->title }}</span>
             </nav>
             <div class="eyebrow">Услуга</div>
-            <h1>{{ $service->title }}</h1>
+            <h1><x-heading-text :text="$service->title" /></h1>
             @if ($service->description)<p>{{ $service->description }}</p>@endif
         </div>
     </section>
@@ -23,12 +23,12 @@
             <div class="detail-grid">
                 <div class="detail-copy">
                     <div class="eyebrow">Какво включва</div>
-                    <h2>{{ $service->intro_heading ?: 'Стабилната сигурност започва с ясен план.' }}</h2>
+                    <h2><x-heading-text :text="$service->intro_heading ?: 'Стабилната сигурност започва с ясен план.'" /></h2>
                     <p>{{ $service->intro_text ?: 'Уточняваме обекта, необходимото покритие и начина на работа, преди да предложим конкретна конфигурация.' }}</p>
                     <div style="margin-top:28px"><a class="btn dark" href="{{ route('quote') }}">Запитване за тази услуга →</a></div>
                 </div>
                 <div class="scope-card">
-                    <h3>Типичен обхват</h3>
+                    <h3>Типичен похват</h3>
                     @forelse (($service->bullets ?? []) as $bullet)
                         @php($title = is_array($bullet) ? ($bullet['title'] ?? $bullet['value'] ?? '') : $bullet)
                         @php($text = is_array($bullet) ? ($bullet['text'] ?? '') : '')
@@ -46,7 +46,7 @@
     @endif
 
     @if ($related->isNotEmpty())
-        <section class="section tone-white"><div class="container"><div class="section-head"><div class="copy"><div class="eyebrow">Още услуги</div><h2>Други услуги.</h2></div><a class="btn outline" href="{{ route('services') }}">Всички услуги →</a></div><div class="related-grid">@foreach ($related as $item)<a class="related-card" href="{{ route('services.show', $item->slug) }}"><h3>{{ $item->title }}</h3><b>Виж →</b></a>@endforeach</div></div></section>
+        <section class="section tone-white"><div class="container"><div class="section-head"><div class="copy"><div class="eyebrow">Още услуги</div><h2>Други услуги.</h2></div><a class="btn outline" href="{{ route('services') }}">Всички услуги →</a></div><div class="related-grid">@foreach ($related as $item)<a class="related-card" href="{{ route('services.show', $item->slug) }}"><h3><x-heading-text :text="$item->title" /></h3><b>Виж →</b></a>@endforeach</div></div></section>
     @endif
 
     <section class="cta-band"><div class="container"><div><div class="eyebrow">Обект в София и региона?</div><h2>Нека планираме системата.</h2></div><a class="btn dark" href="{{ route('quote') }}">Запитване →</a></div></section>

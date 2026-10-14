@@ -1397,6 +1397,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
    `break-word` rule could split "Видеонаблюдение" in the middle.
    ------------------------------------------------------------- */
 h1,h2,h3,h4,.display{word-break:normal;overflow-wrap:normal;hyphens:none}
+.heading-word{white-space:nowrap}
 
 .service-plain-grid>*,
 .service-photo-grid>*,
@@ -1424,9 +1425,11 @@ h1,h2,h3,h4,.display{word-break:normal;overflow-wrap:normal;hyphens:none}
    service word fits on 320px screens without clipping or breaking apart. */
 @media(max-width:700px){
   .detail-hero h1{font-size:clamp(2rem,9vw,3.7rem)}
-  .detail-copy h2,.problem-copy h2{font-size:clamp(2rem,8.8vw,3.2rem)}
+  .inner-page .detail-copy h2,.inner-page .problem-copy h2{font-size:clamp(1.5rem,7.7vw,2.6rem);max-width:100%;text-wrap:wrap}
   .list-card h3{font-size:clamp(1.8rem,8.5vw,2.25rem)}
   .service-plain-card h3{font-size:clamp(1.85rem,9vw,3.5rem)}
+  .article-title{font-size:clamp(2rem,9vw,3.2rem)}
+  .richtext h2{font-size:clamp(1.6rem,8vw,2.1rem)}
 }
 
 /* The longest hero word ("ВИДЕОНАБЛЮДЕНИЕ,") sets the ceiling for the

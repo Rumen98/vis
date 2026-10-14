@@ -7,16 +7,14 @@
 
     @php
         $pageTitle = trim($__env->yieldContent('title'));
-        $siteTitle = 'ВиС - Видеонаблюдение и сигурност';
+        $siteTitle = 'Видеонаблюдение София | Монтаж на камери | ВиС';
         $isHomePage = $pageTitle && mb_strtolower($pageTitle) === 'начало';
         $fullTitle = $isHomePage
             ? 'Видеонаблюдение София | Монтаж на камери | ВиС'
             : ($pageTitle ? $pageTitle . ' | ' . $siteTitle : $siteTitle);
         $defaultDescription =
-            'Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи, паркинг решения. Проектиране, монтаж и поддръжка.';
-        $metaDescription = $isHomePage
-            ? 'Монтаж на видеонаблюдение в София за домове и бизнес. Оглед, ясна оферта, чист монтаж и настройка. Вижте реални обекти на ВиС.'
-            : (trim($__env->yieldContent('meta-description')) ?: $defaultDescription);
+            'Монтаж на видеонаблюдение в София за домове и бизнес. Оглед, ясна оферта, чист монтаж и настройка. Вижте реални обекти на ВиС.';
+        $metaDescription = trim($__env->yieldContent('meta-description')) ?: $defaultDescription;
 
         $bodyClass = trim($__env->yieldContent('body-class')) ?: 'inner-page';
     @endphp
@@ -31,17 +29,15 @@
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="ВиС CCTV">
-    <meta property="og:title" content="ВиС - Видеонаблюдение и сигурност">
-    <meta property="og:description"
-        content="Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи и паркинг решения.">
+    <meta property="og:title" content="{{ $fullTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="https://viscctv.com">
     <meta property="og:image" content="https://viscctv.com/images/og/og-default.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ВиС - Видеонаблюдение и сигурност">
-    <meta name="twitter:description"
-        content="Видеонаблюдение, охранителни системи, контрол на достъп, LAN и Wi-Fi мрежи и паркинг решения.">
+    <meta name="twitter:title" content="{{ $fullTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
     <meta name="twitter:image" content="https://viscctv.com/images/og/og-default.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">

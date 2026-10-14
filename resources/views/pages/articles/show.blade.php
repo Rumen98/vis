@@ -14,7 +14,7 @@
             </nav>
 
             <div class="eyebrow">Статия</div>
-            <h1>{{ $article->title }}</h1>
+            <h1 class="article-title"><x-heading-text :text="$article->title" /></h1>
         </div>
     </section>
 

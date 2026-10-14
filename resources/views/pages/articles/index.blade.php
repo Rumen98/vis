@@ -21,7 +21,7 @@
                 <a class="article-card" href="{{ route('articles.show', $article->slug) }}">
                     <div>
                         <span class="tag">Статия</span>
-                        <h3>{{ $article->title }}</h3>
+                        <h3><x-heading-text :text="$article->title" /></h3>
 
                         @if ($article->excerpt)
                             <p>{{ $article->excerpt }}</p>

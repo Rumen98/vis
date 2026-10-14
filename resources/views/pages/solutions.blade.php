@@ -90,7 +90,7 @@
                                     {{ $article->solution ? 'Към решение: ' . $article->solution->title : 'Обща статия' }}
                                 </span>
 
-                                <h3>{{ $article->title }}</h3>
+                                <h3><x-heading-text :text="$article->title" /></h3>
 
                                 @if (! empty($article->excerpt))
                                     <p>{{ $article->excerpt }}</p>

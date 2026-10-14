@@ -16,7 +16,7 @@
             </nav>
 
             <div class="eyebrow">Решение</div>
-            <h1>{{ $solution->title }}</h1>
+            <h1><x-heading-text :text="$solution->title" /></h1>
 
             @if ($solution->description)
                 <p>{{ $solution->description }}</p>
@@ -30,7 +30,7 @@
                 <div class="problem-wrap">
                     <div class="problem-copy">
                         <div class="eyebrow">Какви проблеми решаваме?</div>
-                        <h2>{{ $solution->intro_heading ?: 'Сигурността трябва да решава реален проблем.' }}</h2>
+                        <h2><x-heading-text :text="$solution->intro_heading ?: 'Сигурността трябва да решава реален проблем.'" /></h2>
                         @if ($solution->intro_text)<p>{{ $solution->intro_text }}</p>@endif
                     </div>
                     <div class="problem-grid">
@@ -48,7 +48,7 @@
             <div class="detail-grid">
                 <div class="detail-copy">
                     <div class="eyebrow">Какво включва</div>
-                    <h2>{{ $solution->problems ? 'Една система. Ясна логика.' : ($solution->intro_heading ?: 'Една система. Ясна логика.') }}</h2>
+                    <h2><x-heading-text :text="$solution->problems ? 'Една система. Ясна логика.' : ($solution->intro_heading ?: 'Една система. Ясна логика.')" /></h2>
 
                     <p>
                         Планираме обхвата според обекта, рисковите зони и начина, по който се използва.
@@ -101,7 +101,7 @@
                 <div class="related-grid">
                     @foreach ($related as $item)
                         <a class="related-card" href="{{ route('solutions.show', $item->slug) }}">
-                            <h3>{{ $item->title }}</h3>
+                            <h3><x-heading-text :text="$item->title" /></h3>
                             <b>Виж →</b>
                         </a>
                     @endforeach
