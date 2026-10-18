@@ -12,9 +12,18 @@ deployment:
     - /usr/local/bin/php $DEPLOYPATH/artisan route:cache
     - /usr/local/bin/php $DEPLOYPATH/artisan view:cache
 
+    # p.php is a former debug endpoint and must never remain web-accessible.
+    - rm -f /home/viscctvc/public_html/p.php
     - cp -r $DEPLOYPATH/storage/app/public/. /home/viscctvc/public_html/storage/
-    - rm -rf /home/viscctvc/public_html/build/
-    - cp -r $DEPLOYPATH/public/build/ /home/viscctvc/public_html/build/
+    # Copy hashed Vite assets first and switch the manifest last. Keeping previous
+    # hashed files avoids a period where visitors receive CSS/JS 404s mid-deploy.
+    - mkdir -p /home/viscctvc/public_html/build/assets
+    - cp -r $DEPLOYPATH/public/build/assets/. /home/viscctvc/public_html/build/assets/
+    - cp $DEPLOYPATH/public/build/manifest.json /home/viscctvc/public_html/build/manifest.json
+    - mkdir -p /home/viscctvc/public_html/css/filament /home/viscctvc/public_html/js/filament /home/viscctvc/public_html/fonts/filament
+    - cp -r $DEPLOYPATH/public/css/filament/. /home/viscctvc/public_html/css/filament/
+    - cp -r $DEPLOYPATH/public/js/filament/. /home/viscctvc/public_html/js/filament/
+    - cp -r $DEPLOYPATH/public/fonts/filament/. /home/viscctvc/public_html/fonts/filament/
     - mkdir -p /home/viscctvc/public_html/videos
     - cp -r $DEPLOYPATH/public/videos/. /home/viscctvc/public_html/videos/
     - mkdir -p /home/viscctvc/public_html/images/logo

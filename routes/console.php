@@ -8,6 +8,7 @@ Artisan::command('vis:import-export-content {path? : Път до export папк
 
     if (! is_dir($path)) {
         $this->error("Не е намерена export папка: {$path}");
+
         return 1;
     }
 
@@ -18,6 +19,7 @@ Artisan::command('vis:import-export-content {path? : Път до export папк
 })->purpose('Попълва текстовете и hero снимките от ViS-site-export');
 
 use Illuminate\Foundation\Inspiring;
+
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');

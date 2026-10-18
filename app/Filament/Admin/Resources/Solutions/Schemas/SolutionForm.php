@@ -3,8 +3,8 @@
 namespace App\Filament\Admin\Resources\Solutions\Schemas;
 
 use App\Models\Solution;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;

@@ -30,11 +30,11 @@ class AdminLeadSmokeTest extends TestCase
         $this->actingAs($user);
 
         $this->get('/admin/leads')->assertOk();
-        $this->get('/admin/leads/' . $lead->getKey())->assertOk()
+        $this->get('/admin/leads/'.$lead->getKey())->assertOk()
             ->assertSee('Паркинг решения')
             ->assertSee('София, Люлин')
             ->assertSee('Жилищна сграда');
-        $this->get('/admin/leads/' . $lead->getKey() . '/edit')->assertOk();
+        $this->get('/admin/leads/'.$lead->getKey().'/edit')->assertOk();
 
         $lead->delete();
     }

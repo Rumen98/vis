@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        RateLimiter::for('lead-submissions', function (Request $request): Limit {
+            return Limit::perMinute(5)->by($request->ip().'|'.$request->route()?->getName());
+        });
+
         // Fix for older MySQL/MariaDB (key length limit with utf8mb4)
         Schema::defaultStringLength(191);
 

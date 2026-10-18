@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::table('solutions', function (Blueprint $table) {
             try {
                 $table->dropForeign(['article_id']);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 // Foreign key may not exist. Ignore and continue.
             }
         });

@@ -33,7 +33,7 @@ class PageController extends Controller
         $galleryQuery = GalleryImage::query()->active()->ordered()->orderBy('id');
         $galleryTotal = (clone $galleryQuery)->count();
         $galleryImages = $galleryQuery->forPage(1, GalleryController::PER_PAGE)->get();
-        $galleryHasMore = GalleryController::PER_PAGE < $galleryTotal;
+        $galleryHasMore = $galleryTotal > GalleryController::PER_PAGE;
 
         return view('pages.home', compact(
             'objectSolutions',

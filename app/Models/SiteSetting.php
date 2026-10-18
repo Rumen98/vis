@@ -54,7 +54,7 @@ class SiteSetting extends Model
     public static function current(): self
     {
         if (! Schema::hasTable('site_settings')) {
-            return new static();
+            return new static;
         }
 
         return static::query()->firstOrCreate([]);

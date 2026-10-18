@@ -38,6 +38,6 @@ Route::controller(ArticleController::class)
     });
 
 Route::controller(LeadController::class)->group(function (): void {
-    Route::post('/contact', 'storeContact')->name('contact.store');
-    Route::post('/quote', 'storeQuote')->name('quote.store');
+    Route::post('/contact', 'storeContact')->middleware('throttle:lead-submissions')->name('contact.store');
+    Route::post('/quote', 'storeQuote')->middleware('throttle:lead-submissions')->name('quote.store');
 });

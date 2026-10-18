@@ -21,7 +21,9 @@ return new class extends Migration
             $base = Str::slug((string) $service->title) ?: 'usluga-'.$service->id;
             $slug = $base;
             $suffix = 2;
-            while (in_array($slug, $used, true)) $slug = $base.'-'.$suffix++;
+            while (in_array($slug, $used, true)) {
+                $slug = $base.'-'.$suffix++;
+            }
             $used[] = $slug;
             DB::table('services')->where('id', $service->id)->update(['slug' => $slug]);
         }

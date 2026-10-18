@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -31,7 +32,7 @@ class HomeVideoSettingsSmokeTest extends TestCase
 
     public function test_video_button_label_and_url_are_editable(): void
     {
-        \App\Models\SiteSetting::current()->update([
+        SiteSetting::current()->update([
             'home_video_button_label' => 'Виж услугите',
             'home_video_button_url' => 'https://viscctv.com/services',
         ]);
@@ -45,7 +46,7 @@ class HomeVideoSettingsSmokeTest extends TestCase
 
     public function test_video_button_can_be_hidden(): void
     {
-        \App\Models\SiteSetting::current()->update([
+        SiteSetting::current()->update([
             'home_video_button_enabled' => false,
         ]);
 

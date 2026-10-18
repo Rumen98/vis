@@ -79,13 +79,18 @@ class ExportContentImporter
     /** @return list<array{title: string, text: string}> */
     private function scopeItems(DOMXPath $xpath, ?DOMNode $scope): array
     {
-        if (! $scope) return [];
+        if (! $scope) {
+            return [];
+        }
         $items = [];
         foreach ($xpath->query('.//*[contains(concat(" ", normalize-space(@class), " "), " scope-item ")]', $scope) ?: [] as $item) {
             $title = $this->text($this->firstRelative($xpath, $item, './/b[1]'));
             $text = $this->text($this->firstRelative($xpath, $item, './/p[1]'));
-            if ($title) $items[] = ['title' => $title, 'text' => $text];
+            if ($title) {
+                $items[] = ['title' => $title, 'text' => $text];
+            }
         }
+
         return $items;
     }
 
@@ -96,19 +101,28 @@ class ExportContentImporter
         foreach ($xpath->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' problem-card ')]") ?: [] as $item) {
             $title = $this->text($this->firstRelative($xpath, $item, './/h3[1]'));
             $text = $this->text($this->firstRelative($xpath, $item, './/p[1]'));
-            if ($title) $items[] = ['title' => $title, 'text' => $text];
+            if ($title) {
+                $items[] = ['title' => $title, 'text' => $text];
+            }
         }
+
         return $items;
     }
 
     private function importHeroImage(?DOMNode $hero, string $htmlFile, string $directory, string $slug): ?string
     {
-        if (! $hero instanceof DOMElement) return null;
-        if (! preg_match("/url\\(['\"]?([^'\")]+)['\"]?\\)/", $hero->getAttribute('style'), $match)) return null;
+        if (! $hero instanceof DOMElement) {
+            return null;
+        }
+        if (! preg_match("/url\\(['\"]?([^'\")]+)['\"]?\\)/", $hero->getAttribute('style'), $match)) {
+            return null;
+        }
         $source = realpath(dirname($htmlFile).'/'.$match[1]);
-        if (! $source || ! is_file($source)) return null;
+        if (! $source || ! is_file($source)) {
+            return null;
+        }
 
-        $destination = $directory.'/'. $slug.'-hero.'.pathinfo($source, PATHINFO_EXTENSION);
+        $destination = $directory.'/'.$slug.'-hero.'.pathinfo($source, PATHINFO_EXTENSION);
         Storage::disk('public')->put($destination, file_get_contents($source));
 
         return $destination;

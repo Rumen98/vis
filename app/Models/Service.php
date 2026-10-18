@@ -40,7 +40,9 @@ class Service extends Model
         });
 
         static::deleting(function (self $service): void {
-            if ($service->featured_image) Storage::disk('public')->delete($service->featured_image);
+            if ($service->featured_image) {
+                Storage::disk('public')->delete($service->featured_image);
+            }
         });
     }
 }

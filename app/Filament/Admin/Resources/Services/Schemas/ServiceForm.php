@@ -2,8 +2,8 @@
 
 namespace App\Filament\Admin\Resources\Services\Schemas;
 
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -23,7 +23,9 @@ class ServiceForm
                     ->maxLength(255)
                     ->live(onBlur: true)
                     ->afterStateUpdated(function ($state, callable $set, $get) {
-                        if (! $get('slug')) $set('slug', Str::slug((string) $state));
+                        if (! $get('slug')) {
+                            $set('slug', Str::slug((string) $state));
+                        }
                     }),
 
                 TextInput::make('slug')

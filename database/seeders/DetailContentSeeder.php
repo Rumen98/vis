@@ -29,8 +29,8 @@ class DetailContentSeeder extends Seeder
     }
 
     /**
-     * @param array<int, array<string, mixed>> $entries
-     * @param class-string<Service|Solution> $modelClass
+     * @param  array<int, array<string, mixed>>  $entries
+     * @param  class-string<Service|Solution>  $modelClass
      */
     private function seedCollection(array $entries, string $modelClass): void
     {

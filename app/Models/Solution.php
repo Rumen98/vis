@@ -47,7 +47,9 @@ class Solution extends Model
         });
 
         static::deleting(function (self $solution): void {
-            if ($solution->featured_image) Storage::disk('public')->delete($solution->featured_image);
+            if ($solution->featured_image) {
+                Storage::disk('public')->delete($solution->featured_image);
+            }
         });
     }
 

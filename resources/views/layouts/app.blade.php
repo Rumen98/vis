@@ -15,13 +15,14 @@
         $defaultDescription =
             'Монтаж на видеонаблюдение в София за домове и бизнес. Оглед, ясна оферта, чист монтаж и настройка. Вижте реални обекти на ВиС.';
         $metaDescription = trim($__env->yieldContent('meta-description')) ?: $defaultDescription;
+        $canonicalUrl = url()->current();
 
         $bodyClass = trim($__env->yieldContent('body-class')) ?: 'inner-page';
     @endphp
 
     <title>{{ $fullTitle }}</title>
     <meta name="description" content="{{ $metaDescription }}">
-    <link rel="canonical" href="https://viscctv.com">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
     <meta name="theme-color" content="#0a0b0c">
 
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -31,7 +32,7 @@
     <meta property="og:site_name" content="ВиС CCTV">
     <meta property="og:title" content="{{ $fullTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
-    <meta property="og:url" content="https://viscctv.com">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:image" content="https://viscctv.com/images/og/og-default.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
