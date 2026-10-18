@@ -2,6 +2,8 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/viscctvc/repositories/vis
+    - export PATH=$PATH:/opt/cpanel/composer/bin
+    - cd $DEPLOYPATH && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction
 
     - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
 
